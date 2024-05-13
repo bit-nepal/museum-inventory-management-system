@@ -1,9 +1,15 @@
+using mims.Services;
+using mims.Services.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
+
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddScoped<IArtifactService, EntityFrameworkCoreArtifactService>();
 
 var app = builder.Build();
 
