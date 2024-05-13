@@ -1,7 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using mims.Models;
+
+namespace mims.Data;
 public class ArtifactContext : DbContext
 {
   public ArtifactContext(DbContextOptions options) : base(options) { }
+
+  public DbSet<Artifact> Artifacts { get; set; } = null!;
   // public DbSet<Color> Colors { get; set; } = null!;
   // public DbSet<Scheme> Schemes { get; set; } = null!;
   // public DbSet<Feature> Features { get; set; } = null!;
