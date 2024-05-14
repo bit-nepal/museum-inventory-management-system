@@ -37,7 +37,7 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
   public IEnumerable<Artifact> GetRecentlyAddedArtifacts(int noOfArtifacts)
   {
     IEnumerable<Artifact> artifacts = _artifactContext.Artifacts
-      .OrderBy(artifact => artifact.CreatedDate)
+      .OrderByDescending(artifact => artifact.CreatedDate)
       .Take(noOfArtifacts);
     return artifacts;
   }

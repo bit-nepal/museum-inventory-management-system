@@ -2,16 +2,17 @@
 @using mims.Services.Interfaces
 @using mims.Services
 
-<!-- inject IArtifactService ArtifactService -->
+@inject IArtifactService ArtifactService 
 
 <h3>TotalArtifacts</h3>
 <div>@number</div>
 
 @code {
-    private IArtifactService ArtifactService;
-    public TotalArtifacts(IArtifactService artifactService){
-        ArtifactService = artifactService;
+    int number;
+    protected override async Task OnInitializedAsync()
+    {
+        number = await ArtifactService.GetArtifactCount();
+        
     }
-    int number = ArtifactService.GetArtifactCount();
 
 }
