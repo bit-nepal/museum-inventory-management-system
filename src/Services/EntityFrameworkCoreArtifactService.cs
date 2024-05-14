@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using mims.Data;
 using mims.Models;
 using mims.Services.Interfaces;
@@ -28,11 +29,17 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
     return artifacts;
   }
 
+    public async Task<int> GetArtifactCount()
+    {
+        int count= await _artifactContext.Artifacts.CountAsync();
+        return count;
+    }
   public IEnumerable<Artifact> GetRecentlyAddedArtifacts(int noOfArtifacts)
   {
     IEnumerable<Artifact> artifacts = _artifactContext.Artifacts
-      .OrderBy(artifact => artifact.CreatedDate)
+      .OrderByDescending(artifact => artifact.CreatedDate)
       .Take(noOfArtifacts);
     return artifacts;
   }
+
 }

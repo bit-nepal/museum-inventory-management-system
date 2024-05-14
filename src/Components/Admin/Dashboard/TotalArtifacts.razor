@@ -1,7 +1,18 @@
 ﻿@namespace mims.Components.Admin.Dashboard
+@using mims.Services.Interfaces
+@using mims.Services
+
+@inject IArtifactService ArtifactService 
 
 <h3>TotalArtifacts</h3>
-21
+<div>@number</div>
+
 @code {
+    int number;
+    protected override async Task OnInitializedAsync()
+    {
+        number = await ArtifactService.GetArtifactCount();
+        
+    }
 
 }
