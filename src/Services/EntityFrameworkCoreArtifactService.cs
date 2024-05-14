@@ -34,4 +34,12 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
         int count= await _artifactContext.Artifacts.CountAsync();
         return count;
     }
+  public IEnumerable<Artifact> GetRecentlyAddedArtifacts(int noOfArtifacts)
+  {
+    IEnumerable<Artifact> artifacts = _artifactContext.Artifacts
+      .OrderBy(artifact => artifact.CreatedDate)
+      .Take(noOfArtifacts);
+    return artifacts;
+  }
+
 }
