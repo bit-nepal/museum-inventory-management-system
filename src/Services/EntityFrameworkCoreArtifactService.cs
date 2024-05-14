@@ -27,4 +27,12 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
     IEnumerable<Artifact> artifacts = _artifactContext.Artifacts.ToList();
     return artifacts;
   }
+
+  public IEnumerable<Artifact> GetRecentlyAddedArtifacts(int noOfArtifacts)
+  {
+    IEnumerable<Artifact> artifacts = _artifactContext.Artifacts
+      .OrderBy(artifact => artifact.CreatedDate)
+      .Take(noOfArtifacts);
+    return artifacts;
+  }
 }

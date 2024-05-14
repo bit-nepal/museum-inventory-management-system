@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace mims.Models;
 public class Artifact
@@ -45,7 +46,10 @@ public class Artifact
   public string SignatureOfReceiver { get; set; } = null!;
   [Column("remarks")]
   public string remarks { get; set; } = null!;
-
+  [Column("created_date")]
+  public DateTime CreatedDate { get; set; }
+  [Column("updated_date")]
+  public DateTime UpdatedDate { get; set; }
   // virtual for lazy loading
   // public virtual Scheme? Scheme { get; set; }
   // public virtual ICollection<Feature>? Features { get; set; }
