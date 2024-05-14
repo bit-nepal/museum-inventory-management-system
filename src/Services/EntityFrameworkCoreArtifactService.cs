@@ -24,7 +24,7 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
   }
   public IEnumerable<Artifact> GetAllArtifacts()
   {
-    var artifacts = _artifactContext.Artifacts;
+    IEnumerable<Artifact> artifacts = _artifactContext.Artifacts.ToList();
     return artifacts;
   }
 }
