@@ -8,4 +8,5 @@ public interface IArtifactService
   string GetArtifactName();
   IActionResult AddArtifact();
   IEnumerable<Artifact> GetAllArtifacts();
+  IEnumerable<Artifact> GetRecentlyAddedArtifacts(int noOfArtifacts);
 }

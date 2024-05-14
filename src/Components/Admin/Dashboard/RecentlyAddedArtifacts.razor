@@ -1,1 +1,22 @@
-RecentlyAddedArtifacts
+@namespace mims.Components.Admin.Dashboard
+@rendermode InteractiveServer
+
+@using mims.Models
+@using mims.Services.Interfaces
+@inject IArtifactService ArtifactService
+
+<h1>RecentlyAddedArtifacts</h1>
+
+@foreach (var artifact in Artifacts)
+{
+  <h2>@artifact.Name</h2>
+}
+
+@code {
+  IEnumerable<Artifact> Artifacts;
+  protected override async Task OnInitializedAsync()
+  {
+    int noOfRecords = 3;
+    Artifacts = ArtifactService.GetRecentlyAddedArtifacts(noOfRecords);
+  }
+}
