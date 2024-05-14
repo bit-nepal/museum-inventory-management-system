@@ -10,4 +10,7 @@
 
 <p>Use this page to detail your site's privacy policy.</p>
 <h2> Data From Artifact Service </h2>
-@ArtifactService.GetArtifactName()
+@foreach (var artifact in ArtifactService.GetAllArtifacts())
+{
+  <h2>@artifact.Name</h2>
+}
