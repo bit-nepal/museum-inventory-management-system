@@ -1,5 +1,7 @@
+using mims.Data;
 using mims.Services;
 using mims.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -8,8 +10,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-
+//------------- Custom Services --------- //
 builder.Services.AddScoped<IArtifactService, EntityFrameworkCoreArtifactService>();
+
+//-------------- Database ----------------//
+var ArtifactConnectionString = builder.Configuration.GetConnectionString("ArtifactConnectionString");
+builder.Services.AddDbContext<ArtifactContext>(
+  options =>
+       options.UseMySql(ArtifactConnectionString,
+                        ServerVersion.AutoDetect(ArtifactConnectionString)));
+
 
 var app = builder.Build();
 
