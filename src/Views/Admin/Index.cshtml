@@ -1,0 +1,11 @@
+﻿@using mims.Components;
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="text-center">
+    <h1 class="display-4">Welcome Admin</h1>
+</div>
+
+<!-- @(await Html.RenderComponentAsync<mims.Components.Counter>(RenderMode.Server))-->
+<component type="typeof(mims.Components.Admin.Dashboard.TotalArtifacts)" render-mode="ServerPrerendered"/>
+<component type="typeof(mims.Components.Admin.Dashboard.RecentlyAddedArtifacts)" render-mode="ServerPrerendered"/>
