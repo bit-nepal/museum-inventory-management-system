@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <Folder Include="Components\User\" />
+    <Folder Include="Views\Admin\NewFolder\" />
   </ItemGroup>
 
 </Project>
