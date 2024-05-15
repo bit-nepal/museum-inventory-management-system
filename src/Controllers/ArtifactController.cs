@@ -1,17 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using mims.Data;
-using mims.Models;
+using Microsoft.AspNetCore.Mvc;
 
-namespace mims.Controllers
+namespace mims.Controllers;
+
+[Route("Admin/Artifact")]
+public class ArtifactController : Controller
 {
-    public class ArtifactController : Controller
+    private readonly ILogger<ArtifactController> _logger;
+    private const string rootViewDirectory = "/Views/Admin/Artifact/";
+    public ArtifactController(ILogger<ArtifactController> logger)
     {
-        private readonly ArtifactContext _artifactContext;
-        public ArtifactController(ArtifactContext artifactContext)
-        {
-            _artifactContext = artifactContext;
-        }
+        _logger = logger;
+    }
 
-
+    public IActionResult Index()
+    {
+        return View(rootViewDirectory + "Index.cshtml");
+    }
+    [Route("Create")]
+    public IActionResult Create()
+    {
+        return View(rootViewDirectory + "Create.cshtml");
+    }
+    [Route("Update")]
+    public IActionResult Update()
+    {
+        return View(rootViewDirectory + "Update.cshtml");
     }
 }
