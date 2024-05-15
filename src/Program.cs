@@ -12,6 +12,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 //------------- Custom Services --------- //
 builder.Services.AddScoped<IArtifactService, EntityFrameworkCoreArtifactService>();
+builder.Services.AddBlazorBootstrap();
 
 //-------------- Database ----------------//
 var ArtifactConnectionString = builder.Configuration.GetConnectionString("ArtifactConnectionString");
