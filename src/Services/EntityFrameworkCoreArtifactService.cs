@@ -14,10 +14,17 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
     this._artifactContext = artifactContext;
   }
 
-  public IActionResult AddArtifact()
+  public IActionResult AddArtifact(Artifact artifact)
   {
-    throw new NotImplementedException();
-  }
+        //if (ModelState.IsValid)
+        //{
+        //    _artifactContext.Artifacts.Add(obj);
+        //    _artifactContext.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
+        //return View(obj);
+        throw new NotImplementedException();
+    }
 
   public string GetArtifactName()
   {

@@ -6,10 +6,10 @@ namespace mims.Services.Interfaces;
 public interface IArtifactService
 {
   string GetArtifactName();
-  IActionResult AddArtifact();
+  IActionResult AddArtifact(Artifact artifact);
   IEnumerable<Artifact> GetAllArtifacts();
 
   Task<int> GetArtifactCount();
   IEnumerable<Artifact> GetRecentlyAddedArtifacts(int noOfArtifacts);
-
+  
 }
