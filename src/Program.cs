@@ -12,6 +12,8 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 //------------- Custom Services --------- //
 builder.Services.AddScoped<IArtifactService, EntityFrameworkCoreArtifactService>();
+
+builder.Services.AddServerSideBlazor();
 builder.Services.AddBlazorBootstrap();
 
 //-------------- Database ----------------//
@@ -38,7 +40,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
-
+app.MapBlazorHub();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
