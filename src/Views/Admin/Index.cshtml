@@ -6,10 +6,6 @@
     <h1 class="display-4">Welcome Admin</h1>
 </div>
 
-<!-- @(await Html.RenderComponentAsync<mims.Components.Counter>(RenderMode.Server))-->
-<component type="typeof(mims.Components.Admin.Dashboard.TotalArtifacts)" render-mode="ServerPrerendered"/>
-<component type="typeof(mims.Components.Admin.Dashboard.RecentlyAddedArtifacts)" render-mode="ServerPrerendered"/>
-
 <div class="col-6 text-end">
     <a asp-controller="Artifact" asp-action="Create" class="btn btn-primary">
         <i class="bi bi-plus-circle"></i> &nbsp; Add New Artifact
