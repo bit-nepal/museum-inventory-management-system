@@ -1,2 +1,29 @@
-﻿
+﻿@inject IArtifactService ArtifactService
+@using System.ComponentModel.DataAnnotations
+@using Services.Interfaces
+
+
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <InputText id="name" class="form-control" @bind-Value="artifact.Name" />
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <InputTextArea id="description" class="form-control" @bind-Value="artifact.Description" />
+    </div>
+    <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <InputText id="category" class="form-control" @bind-Value="artifact.Name" />
+    </div>
+  
+
+@code {
+
+    private mims.Models.Artifact artifact = new mims.Models.Artifact();
+
+  
+
+    
+}
+
 
