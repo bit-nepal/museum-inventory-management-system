@@ -1,8 +1,16 @@
 ﻿@using mims.Components;
+@using mims.Components.Admin.Dashboard;
+
 @{
     ViewData["Title"] = "Home Page";
 }
+
 <div class="text-center">
     <h1 class="display-4">Welcome Admin</h1>
 </div>
+<component type="typeof(NavBar)" render-mode="ServerPrerendered" />
+<component type="typeof(RecentlyAddedArtifacts)" render-mode="ServerPrerendered" />
+<component type="typeof(TotalArtifacts)" render-mode="ServerPrerendered" />
+
+
 
