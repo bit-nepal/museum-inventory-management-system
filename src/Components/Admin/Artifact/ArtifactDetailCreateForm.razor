@@ -1,4 +1,5 @@
 @namespace mims.Components.Admin.Artifact
+@inject mims.Services.Interfaces.IArtifactService artifactService
 
 <Alert Color="AlertColor.Light">
     <div class="d-flex justify-content-between align-items-center">
@@ -26,6 +27,7 @@
     } 
     public async Task HandleValidSubmit()
     {
-      Console.WriteLine("Create Form Submitted");
+        Console.WriteLine("Create Form Submitted");
+        artifactService.AddArtifact(artifact);
     }
 }
