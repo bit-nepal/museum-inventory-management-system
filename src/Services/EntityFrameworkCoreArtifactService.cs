@@ -14,7 +14,7 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
     this._artifactContext = artifactContext;
   }
 
-  public IActionResult AddArtifact(Artifact artifact)
+  public Task<int> AddArtifact(Artifact artifact)
   {
         //if (ModelState.IsValid)
         //{
@@ -23,7 +23,11 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
         //    return RedirectToAction("Index");
         //}
         //return View(obj);
-        throw new NotImplementedException();
+
+        _artifactContext.AddAsync(artifact);
+         return _artifactContext.SaveChangesAsync();
+        
+
     }
 
   public string GetArtifactName()
