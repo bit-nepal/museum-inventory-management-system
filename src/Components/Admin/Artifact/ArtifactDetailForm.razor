@@ -30,12 +30,12 @@
     public string ButtonText{ get; set; }
 
     [Parameter]
-    public EventCallback OnValidSubmit { get; set; }
+    public EventCallback OnValidSubmitHandler { get; set; }
     private async Task HandleValidSubmit()
     {
-        if (OnValidSubmit.HasDelegate)
+        if (OnValidSubmitHandler.HasDelegate)
         {
-            await OnValidSubmit.InvokeAsync(null);
+            await OnValidSubmitHandler.InvokeAsync(null);
         }
     }
 }
