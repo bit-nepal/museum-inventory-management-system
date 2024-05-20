@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mims.Data;
 
@@ -11,9 +12,11 @@ using mims.Data;
 namespace mims.Migrations
 {
     [DbContext(typeof(ArtifactContext))]
-    partial class ArtifactContextModelSnapshot : ModelSnapshot
+    [Migration("20240520030418_NullableField")]
+    partial class NullableField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

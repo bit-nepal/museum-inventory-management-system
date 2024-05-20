@@ -16,19 +16,21 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
 
   public Task<int> AddArtifact(Artifact artifact)
   {
-        //if (ModelState.IsValid)
-        //{
-        //    _artifactContext.Artifacts.Add(obj);
-        //    _artifactContext.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-        //return View(obj);
+    //if (ModelState.IsValid)
+    //{
+    //    _artifactContext.Artifacts.Add(obj);
+    //    _artifactContext.SaveChanges();
+    //    return RedirectToAction("Index");
+    //}
+    //return View(obj);
+    Artifact a = new Artifact();
+    artifact.CreatedDate = new DateTime();
+    artifact.UpdatedDate = new DateTime();
+    _artifactContext.AddAsync(artifact);
+    return _artifactContext.SaveChangesAsync();
 
-        _artifactContext.AddAsync(artifact);
-         return _artifactContext.SaveChangesAsync();
-        
 
-    }
+  }
 
   public string GetArtifactName()
   {
@@ -40,11 +42,11 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
     return artifacts;
   }
 
-    public async Task<int> GetArtifactCount()
-    {
-        int count= await _artifactContext.Artifacts.CountAsync();
-        return count;
-    }
+  public async Task<int> GetArtifactCount()
+  {
+    int count = await _artifactContext.Artifacts.CountAsync();
+    return count;
+  }
   public IEnumerable<Artifact> GetRecentlyAddedArtifacts(int noOfArtifacts)
   {
     IEnumerable<Artifact> artifacts = _artifactContext.Artifacts
