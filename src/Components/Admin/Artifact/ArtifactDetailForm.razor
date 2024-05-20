@@ -3,28 +3,31 @@
 @using Services.Interfaces
 @namespace mims.Components.Admin.Artifact
 
-<EditForm Model="@artifact" OnValidSubmit="@HandleValidSubmit">
+<EditForm Model="@bindingArtifactObject" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
     <div class="mb-3">
         <label for="id" class="form-label">Id</label>
-        <InputNumber id="id" class="form-control" @bind-Value="artifact.Id" />
+        <InputNumber id="id" class="form-control" @bind-Value="bindingArtifactObject.Id" />
     </div>
     <div class="mb-3">
         <label for="name" class="form-label">Name</label>
-        <InputText id="name" class="form-control" @bind-Value="artifact.Name" />
+        <InputText id="name" class="form-control" @bind-Value="bindingArtifactObject.Name" />
     </div>
     <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <InputTextArea id="description" class="form-control" @bind-Value="artifact.Description" />
+        <InputTextArea id="description" class="form-control" @bind-Value="bindingArtifactObject.Description" />
     </div>
 
     <button type="submit" id="submitButton" class="btn btn-primary">@ButtonText</button>
 </EditForm>
 
 @code {
-    private mims.Models.Artifact artifact = new mims.Models.Artifact();
+    @* private mims.Models.Artifact bindingArtifactObject = new mims.Models.Artifact(); *@
+
+    [Parameter]
+    public mims.Models.Artifact bindingArtifactObject {get;set;}
 
     [Parameter]
     public string ButtonText{ get; set; }
