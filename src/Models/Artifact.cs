@@ -6,46 +6,47 @@ public class Artifact
   // format : [Column (string name, Properties:[Order = int],[TypeName = string])
   [Column("artifact_id")]
   public int Id { get; set; }
+
   [Column("name")]
   public string Name { get; set; } = null!;
   [Column("description")]
   public string Description { get; set; } = null!;
   [Column("used_matriel")]
-  public string UsedMaterial { get; set; } = null!;
+  public string? UsedMaterial { get; set; }
   [Column("period")]
-  public string Period { get; set; } = null!;
+  public string? Period { get; set; }
   [Column("inscription")]
-  public string Inscription { get; set; } = null!;
+  public string? Inscription { get; set; }
   //Make this own One to Many
   [Column("measurement")]
-  public string Measurement { get; set; } = null!;
+  public string? Measurement { get; set; }
   //TODO--------------
   [Column("weight")]
-  public string Weight { get; set; } = null!;
+  public string? Weight { get; set; }
   [Column("date_of_aquisition")]
-  public string DateOfAquisition { get; set; } = null!;
+  public string? DateOfAquisition { get; set; }
   [Column("place_of_origin")]
-  public string PlaceOfOrigin { get; set; } = null!;
+  public string? PlaceOfOrigin { get; set; }
   [Column("name_of_donor")]
-  public string NameOfDonor { get; set; } = null!;
+  public string? NameOfDonor { get; set; }
   [Column("place_of_receipt")]
-  public string PlaceOfReceipt { get; set; } = null!;
+  public string? PlaceOfReceipt { get; set; }
   [Column("location")]
-  public string Location { get; set; } = null!;
+  public string? Location { get; set; }
   [Column("physical_condition")]
-  public string PhysicalCondition { get; set; } = null!;
+  public string? PhysicalCondition { get; set; }
   [Column("number_of_object")]
-  public string Number { get; set; } = null!;
+  public string? Number { get; set; }
   [Column("name_of_artist")]
-  public string NameOfArtist { get; set; } = null!;
+  public string? NameOfArtist { get; set; }
   [Column("estimated_value")]
-  public string EstimatedValue { get; set; } = null!;
+  public string? EstimatedValue { get; set; }
   [Column("photo_no")]
-  public string PhotoNumber { get; set; } = null!;
+  public string? PhotoNumber { get; set; }
   [Column("signature_of_receiver")]
-  public string SignatureOfReceiver { get; set; } = null!;
+  public string? SignatureOfReceiver { get; set; }
   [Column("remarks")]
-  public string remarks { get; set; } = null!;
+  public string? remarks { get; set; }
   [Column("created_date")]
   public DateTime CreatedDate { get; set; }
   [Column("updated_date")]
