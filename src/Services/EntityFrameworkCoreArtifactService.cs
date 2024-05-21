@@ -23,7 +23,7 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
     //    return RedirectToAction("Index");
     //}
     //return View(obj);
-    Artifact a = new Artifact();
+    //Artifact a = new Artifact();
     artifact.CreatedDate = new DateTime();
     artifact.UpdatedDate = new DateTime();
     _artifactContext.AddAsync(artifact);
@@ -54,5 +54,13 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
       .Take(noOfArtifacts);
     return artifacts;
   }
+
+    public Task<int> UpdateArtifact(Artifact artifact)
+    {
+        artifact.CreatedDate = new DateTime();
+        artifact.UpdatedDate = new DateTime();
+        _artifactContext.Update(artifact);
+        return _artifactContext.SaveChangesAsync();
+    }
 
 }

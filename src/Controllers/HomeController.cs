@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using mims.Models;
 
 namespace mims.Controllers;
@@ -7,8 +8,12 @@ namespace mims.Controllers;
 public class HomeController : Controller
 {
   private readonly ILogger<HomeController> _logger;
-
-  public HomeController(ILogger<HomeController> logger)
+    public override void OnActionExecuting(ActionExecutingContext filterContext)
+    {
+        ViewBag.Layout = "~/Views/Shared/_Layout_Home.cshtml";
+        base.OnActionExecuting(filterContext);
+    }
+    public HomeController(ILogger<HomeController> logger)
   {
     _logger = logger;
   }

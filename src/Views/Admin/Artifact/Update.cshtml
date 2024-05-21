@@ -1,2 +1,5 @@
 ﻿@using mims.Components.Admin.Artifact
-<component type="typeof(ArtifactDetailUpdateForm)" render-mode="ServerPrerendered" />
+@model mims.Views.Admin.Artifacts.UpdateModel
+
+<component type="typeof(ArtifactDetailUpdateForm)" render-mode="ServerPrerendered" id="5" />
+@Model.ArtifactId
