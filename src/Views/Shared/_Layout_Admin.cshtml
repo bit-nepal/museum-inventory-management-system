@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - mims</title>
+    <base href="/" />
+    <!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/mims.styles.css" asp-append-version="true" />
+
+    <!-------------- BlazorBootstrap Config ------------------->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link href="_content/Blazor.Bootstrap/blazor.bootstrap.css" rel="stylesheet" />
+<style>
+    /* Custom styles for the navbar */
+    #sidebar {
+      height: 110vh;
+      width: 10rem;
+      position: absolute;
+      top: 0rem;
+      left: -2500px; /* Hidden by default */
+      background-color: #343a40;
+      transition: left 0.3s;
+      z-index:  999999999999;
+    }
+    #sidebar:hover {
+      left: 0px;
+    }
+    #sidebar.active {
+          left: 0px;
+        }    
+    body {
+      transition: margin-left 0.5s;
+    }
+  </style>
+</head>
+<body>
+
+     <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Jyapu Samaj</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Home</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+      
+        <div id="sidebar" class="bg-dark">
+          <nav class="navbar navbar-dark bg-dark flex-column">  
+             <ul class="nav flex-column">
+              <li class="nav-item">
+                <div class="nav-link text-light" >Jyapu Samaj</div>
+              </li>
+
+              <li class="nav-item">
+                <div class="nav-link text-light" >Admin Panel</div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light" href="/Admin">Overview</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light" href="/Admin/Artifacts">Artifacts</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light" href="/Admin/Profile">Profile</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <!-- Navbar content -->
+        </header> 
+        <div class="container">
+            
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2024 - mims - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+
+        <!---------------- Blazor Config ----------------->
+        <base href="~/" />
+        <script src="_framework/blazor.server.js"></script>
+
+        <!-------------- BlazorBootstrap Config ------------------->
+         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <script src="_content/Blazor.Bootstrap/blazor.bootstrap.js"></script> 
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+      <script>
+           $(document).ready(function() {
+        // Show sidebar when the mouse hits the left side of the screen
+        $(document).mousemove(function(event) {
+          if (event.pageX < 50) {
+            $('#sidebar').addClass('active');
+          } else if (!$('#sidebar').is(':hover') )  {
+            $('#sidebar').removeClass('active');
+          }
+        });
+
+              });
+    </script>
+      @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
