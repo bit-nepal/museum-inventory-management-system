@@ -22,13 +22,16 @@ public class ArtifactController : Controller
     return View(rootViewDirectory + "Create.cshtml");
   }
   [Route("Update")]
-  public IActionResult Update()
+  [HttpGet("{ArtifactId}")]
+  public IActionResult Update(int ArtifactId)
   {
-    return View(rootViewDirectory + "Update.cshtml");
-  }
+    Console.WriteLine("Artifact id from contreoller : " +  ArtifactId);
+        return View($"{rootViewDirectory}Update.cshtml?{nameof(ArtifactId)}={ArtifactId}"  );
+        //return RedirectToPage("/Admin/Artifacts/Update", new { ArtifactId });
+    }
 
   [HttpGet("{ArtifactId}")]
-  public IActionResult GetTenantById(int TenantId)
+  public IActionResult GetTenantById(int ArtifactId)
   {
     return View(rootViewDirectory + "Details.cshtml");
   }
