@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using mims.Views.Admin.Artifact;
 
 namespace mims.Controllers;
 
@@ -16,24 +17,28 @@ public class ArtifactController : Controller
   {
     return View(rootViewDirectory + "Index.cshtml");
   }
+
   [Route("Create")]
   public IActionResult Create()
   {
     return View(rootViewDirectory + "Create.cshtml");
   }
-  [Route("Update")]
-  [HttpGet("{ArtifactId}")]
-  public IActionResult Update(int ArtifactId)
+
+  [Route("Update/{ArtifactId}")]
+  // [HttpGet("{ArtifactId}")]
+  public IActionResult Update(int artifactId)
   {
-    Console.WriteLine("Artifact id from contreoller : " +  ArtifactId);
-        return View($"{rootViewDirectory}Update.cshtml?{nameof(ArtifactId)}={ArtifactId}"  );
-        //return RedirectToPage("/Admin/Artifacts/Update", new { ArtifactId });
-    }
+    var updateModel = new UpdateModel() { ArtifactId = artifactId };
+    Console.WriteLine("Artifact id from contreoller Update : " + artifactId);
+    return View($"{rootViewDirectory}Update.cshtml", updateModel);
+  }
 
   [HttpGet("{ArtifactId}")]
-  public IActionResult GetTenantById(int ArtifactId)
+  public IActionResult GetTenantById(int artifactId)
   {
-    return View(rootViewDirectory + "Details.cshtml");
+    var detailModel = new DetailsModel() { ArtifactId = artifactId };
+    Console.WriteLine("Artifact id from contreoller Details: " + artifactId);
+    return View(rootViewDirectory + "Details.cshtml", detailModel);
   }
 
 }

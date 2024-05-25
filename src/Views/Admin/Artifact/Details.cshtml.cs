@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace mims.Views.Admin.Artifact
 {
-  public class UpdateModel : PageModel
+  public class DetailsModel : PageModel
   {
     [BindProperty(SupportsGet = true)]
     public int ArtifactId { get; set; }
