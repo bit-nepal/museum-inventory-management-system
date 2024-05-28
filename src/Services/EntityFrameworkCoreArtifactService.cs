@@ -47,20 +47,20 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
     int count = await _artifactContext.Artifacts.CountAsync();
     return count;
   }
-  public IEnumerable<Artifact> GetRecentlyAddedArtifacts(int noOfArtifacts)
+  public async Task<IEnumerable<Artifact>> GetRecentlyAddedArtifacts(int noOfArtifacts)
   {
-    IEnumerable<Artifact> artifacts = _artifactContext.Artifacts
+    IEnumerable<Artifact> artifacts = await _artifactContext.Artifacts
       .OrderByDescending(artifact => artifact.CreatedDate)
-      .Take(noOfArtifacts);
+      .Take(noOfArtifacts).ToListAsync();
     return artifacts;
   }
 
-    public Task<int> UpdateArtifact(Artifact artifact)
-    {
-        artifact.CreatedDate = new DateTime();
-        artifact.UpdatedDate = new DateTime();
-        _artifactContext.Update(artifact);
-        return _artifactContext.SaveChangesAsync();
-    }
+  public Task<int> UpdateArtifact(Artifact artifact)
+  {
+    artifact.CreatedDate = new DateTime();
+    artifact.UpdatedDate = new DateTime();
+    _artifactContext.Update(artifact);
+    return _artifactContext.SaveChangesAsync();
+  }
 
 }
