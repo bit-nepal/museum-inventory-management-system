@@ -23,6 +23,6 @@
   protected override async Task OnInitializedAsync()
   {
     int noOfRecords = 4;
-    Artifacts = ArtifactService.GetRecentlyAddedArtifacts(noOfRecords);
+    Artifacts = await ArtifactService.GetRecentlyAddedArtifacts(noOfRecords);
   }
 }
