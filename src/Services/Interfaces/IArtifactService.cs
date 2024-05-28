@@ -8,10 +8,10 @@ public interface IArtifactService
   string GetArtifactName();
   Task<int> AddArtifact(Artifact artifact);
 
-    Task<int> UpdateArtifact(Artifact artifact);
-  IEnumerable<Artifact> GetAllArtifacts();
+  Task<int> UpdateArtifact(Artifact artifact);
+  Task<IEnumerable<Artifact>> GetAllArtifacts();
 
   Task<int> GetArtifactCount();
   Task<IEnumerable<Artifact>> GetRecentlyAddedArtifacts(int noOfArtifacts);
-  
+
 }

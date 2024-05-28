@@ -10,9 +10,20 @@
         <CardTitle>Recently Added Artifacts: </CardTitle>
     </CardBody>
     <ul class="list-group list-group-flush">
-        @foreach (var artifact in Artifacts)
+        @if (isLoading)
         {
-            <li class="list-group-item">@artifact.Name</li>
+            <li class="list-group-item">Loading...</li>
+        }
+        else if (Artifacts == null || !Artifacts.Any())
+        {
+            <li class="list-group-item">No artifacts found !!</li>
+        }
+        else
+        {
+            foreach (var artifact in Artifacts)
+            {
+                <li class="list-group-item">@artifact.Name</li>
+            }
         }
     </ul>
 </Card>
@@ -20,9 +31,12 @@
 
 @code {
   IEnumerable<Artifact> Artifacts;
+  private bool isLoading = true;
+
   protected override async Task OnInitializedAsync()
   {
     int noOfRecords = 4;
     Artifacts = await ArtifactService.GetRecentlyAddedArtifacts(noOfRecords);
+    isLoading = false;
   }
 }

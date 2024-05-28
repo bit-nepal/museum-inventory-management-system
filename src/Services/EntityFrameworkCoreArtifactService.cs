@@ -8,14 +8,16 @@ namespace mims.Services;
 
 public class EntityFrameworkCoreArtifactService : IArtifactService
 {
-  private readonly ArtifactContext _artifactContext;
-  public EntityFrameworkCoreArtifactService(ArtifactContext artifactContext)
+  // private readonly ArtifactContext _artifactContext;
+  private readonly IDbContextFactory<ArtifactContext> _artifactContextFactory;
+  public EntityFrameworkCoreArtifactService(IDbContextFactory<ArtifactContext> artifactContextFactory)
   {
-    this._artifactContext = artifactContext;
+    this._artifactContextFactory = artifactContextFactory;
   }
 
-  public Task<int> AddArtifact(Artifact artifact)
+  public async Task<int> AddArtifact(Artifact artifact)
   {
+    var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();
     //if (ModelState.IsValid)
     //{
     //    _artifactContext.Artifacts.Add(obj);
@@ -26,8 +28,8 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
     //Artifact a = new Artifact();
     artifact.CreatedDate = new DateTime();
     artifact.UpdatedDate = new DateTime();
-    _artifactContext.AddAsync(artifact);
-    return _artifactContext.SaveChangesAsync();
+    await _artifactContext.AddAsync(artifact);
+    return await _artifactContext.SaveChangesAsync();
 
 
   }
@@ -36,31 +38,35 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
   {
     return "DUMMY STRING";
   }
-  public IEnumerable<Artifact> GetAllArtifacts()
+  public async Task<IEnumerable<Artifact>> GetAllArtifacts()
   {
+    var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();
     IEnumerable<Artifact> artifacts = _artifactContext.Artifacts.ToList();
     return artifacts;
   }
 
   public async Task<int> GetArtifactCount()
   {
+    var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();
     int count = await _artifactContext.Artifacts.CountAsync();
     return count;
   }
   public async Task<IEnumerable<Artifact>> GetRecentlyAddedArtifacts(int noOfArtifacts)
   {
+    var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();
     IEnumerable<Artifact> artifacts = await _artifactContext.Artifacts
       .OrderByDescending(artifact => artifact.CreatedDate)
       .Take(noOfArtifacts).ToListAsync();
     return artifacts;
   }
 
-  public Task<int> UpdateArtifact(Artifact artifact)
+  public async Task<int> UpdateArtifact(Artifact artifact)
   {
+    var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();
     artifact.CreatedDate = new DateTime();
     artifact.UpdatedDate = new DateTime();
     _artifactContext.Update(artifact);
-    return _artifactContext.SaveChangesAsync();
+    return await _artifactContext.SaveChangesAsync();
   }
 
 }

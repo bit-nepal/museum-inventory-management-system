@@ -18,7 +18,7 @@ builder.Services.AddBlazorBootstrap();
 
 //-------------- Database ----------------//
 var ArtifactConnectionString = builder.Configuration.GetConnectionString("ArtifactConnectionString");
-builder.Services.AddDbContext<ArtifactContext>(
+builder.Services.AddDbContextFactory<ArtifactContext>(
   options =>
        options.UseMySql(ArtifactConnectionString,
                         ServerVersion.AutoDetect(ArtifactConnectionString)));
