@@ -76,7 +76,7 @@
     private async Task<GridDataProviderResult<Artifact>> ArtifactsDataProvider(GridDataProviderRequest<Artifact> request)
     {
         if (artifacts is null) // pull artifacts only one time for client-side filtering, sorting, and paging
-            artifacts = ArtifactService.GetAllArtifacts(); // call a service or an API to pull the artifacts
+            artifacts = await ArtifactService.GetAllArtifacts(); // call a service or an API to pull the artifacts
         return await Task.FromResult(request.ApplyTo(artifacts));
     }
 
