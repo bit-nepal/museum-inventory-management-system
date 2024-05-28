@@ -89,8 +89,9 @@
     private async Task OnRowClick(GridRowEventArgs<Artifact> args)
     {
         @* args.Item.Id *@
+        Console.WriteLine("------------Row clicked " +  args.Item.Id);
         var artifactId = args.Item.Id;
-        Navigation.NavigateTo($"Admin/Artifact/{artifactId}",forceLoad:true);
+        Navigation.NavigateTo($"Admin/Artifacts/{artifactId}",forceLoad:true);
     }
 
     private List<BreadcrumbItem>? navItems;
