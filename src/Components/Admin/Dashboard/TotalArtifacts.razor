@@ -3,9 +3,14 @@
 @using mims.Services
 
 @inject IArtifactService ArtifactService 
+<Card Color="CardColor.Success" Class="mb-4" Style="width:18rem;">
+    <CardBody>
+        <CardTitle>Total Artifacts:</CardTitle>
+        <CardText>@number</CardText>
+    </CardBody>
+</Card>
 
-<h3>TotalArtifacts</h3>
-<div>@number</div>
+
 
 @code {
     int number;

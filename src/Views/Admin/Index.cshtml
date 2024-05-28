@@ -12,10 +12,11 @@
 <component type="typeof(NavBar)" render-mode="ServerPrerendered" />
  @( await Html.RenderComponentAsync<NavBar>
     (RenderMode.ServerPrerendered) ) 
+<div class="d-flex justify-content-around">
+    <component type="typeof(TotalArtifacts)" render-mode="ServerPrerendered" />
+    <component type="typeof(RecentlyAddedArtifacts)" render-mode="ServerPrerendered" />
+</div>
 
-
- <component type="typeof(RecentlyAddedArtifacts)" render-mode="ServerPrerendered" />
-<component type="typeof(TotalArtifacts)" render-mode="ServerPrerendered" />
  
 
 
