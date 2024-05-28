@@ -12,6 +12,6 @@ public interface IArtifactService
   IEnumerable<Artifact> GetAllArtifacts();
 
   Task<int> GetArtifactCount();
-  IEnumerable<Artifact> GetRecentlyAddedArtifacts(int noOfArtifacts);
+  Task<IEnumerable<Artifact>> GetRecentlyAddedArtifacts(int noOfArtifacts);
   
 }
