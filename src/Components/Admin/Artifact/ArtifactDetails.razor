@@ -1,0 +1,162 @@
+@namespace mims.Components.Admin.Artifact
+@using mims.Services.Interfaces;
+@inject IArtifactService ArtifactService
+
+<Toasts class="p-3" Messages="messages" Placement="ToastsPlacement.TopRight" />
+<ConfirmDialog @ref="dialog" />
+<Alert Color="AlertColor.Light"><h1> Artifact Details !!</h1></Alert>
+@if (isLoading)
+{
+            <li class="list-group-item">Loading...</li>
+}
+else if (artifact == null )
+{
+  <li class="list-group-item">No artifact found!!</li>
+}
+else
+{
+  <Card >
+    <CardBody>
+      <CardTitle>
+        <b>Name : </b>
+        <EditableField @bind-Value="artifact.Name">
+                @artifact.Name
+        </EditableField>
+      </CardTitle>
+      <CardTitle>
+        <b>Description:  </b>
+        <EditableField @bind-Value="artifact.Description">
+                @artifact.Description
+        </EditableField>
+      </CardTitle>
+      <CardTitle>
+        <b>Description:  </b>
+        <EditableField @bind-Value="artifact.Description">
+                @artifact.Description
+        </EditableField>
+      </CardTitle>
+      <CardTitle>
+        <b>Description:  </b>
+        <EditableField @bind-Value="artifact.Description">
+                @artifact.Description
+        </EditableField>
+      </CardTitle>
+      <CardTitle>
+        <b>Description:  </b>
+        <EditableField @bind-Value="artifact.Description">
+                @artifact.Description
+        </EditableField>
+      </CardTitle>
+      <CardTitle>
+        <b>Description:  </b>
+        <EditableField @bind-Value="artifact.Description">
+                @artifact.Description
+        </EditableField>
+      </CardTitle>
+      <CardTitle>
+        <b>Description:  </b>
+        <EditableField @bind-Value="artifact.Description">
+                @artifact.Description
+        </EditableField>
+      </CardTitle>
+      <CardTitle>
+      <CardTitle>
+        <b>Description:  </b>
+        <EditableField @bind-Value="artifact.Description">
+                @artifact.Description
+        </EditableField>
+      </CardTitle>
+        <b>Description:  </b>
+        <EditableField @bind-Value="artifact.Description">
+                @artifact.Description
+        </EditableField>
+      </CardTitle>
+      <CardTitle>
+        <b>Description:  </b>
+        <EditableField @bind-Value="artifact.Description">
+                @artifact.Description
+        </EditableField>
+      </CardTitle>
+      <CardTitle>
+        <b>Description:  </b>
+        <EditableField @bind-Value="artifact.Description">
+                @artifact.Description
+        </EditableField>
+      </CardTitle>
+      <CardTitle>
+        <b>Description:  </b>
+        <EditableField @bind-Value="artifact.Description">
+                @artifact.Description
+        </EditableField>
+      </CardTitle>
+
+    </CardBody>
+  </Card>
+}
+<br>
+
+<Button Color="ButtonColor.Primary" @onclick="SaveChangesAsync"> Save Changes</Button>
+<Button Color="ButtonColor.Danger" @onclick="ShowDeleteConfirmationAsync"> Delete Artifact</Button>
+@code {
+    [Parameter]
+    public int ArtifactId{ get; set; }
+    private bool isLoading = true;
+    public mims.Models.Artifact artifact {get;set;}
+    private ConfirmDialog dialog = default!;
+
+    List<ToastMessage> messages = new List<ToastMessage>();
+
+    private void ShowMessage(ToastType toastType) => messages.Add(CreateToastMessage(toastType));
+
+    private ToastMessage CreateToastMessage(ToastType toastType)
+    => new ToastMessage
+        {
+            Type = toastType,
+            Title = "Blazor Bootstrap",
+            HelpText = $"{DateTime.Now}",
+            Message = $"Hello, world! This is a toast message. DateTime: {DateTime.Now}",
+        };
+
+    protected async override Task OnInitializedAsync()
+    {
+      artifact = await ArtifactService.GetArtifact(ArtifactId);
+      isLoading =  false;
+      try
+      {
+        artifact = await ArtifactService.GetArtifact(ArtifactId);
+      }
+      catch (Exception ex)
+      {
+        // Handle exceptions as needed
+        Console.WriteLine($"Error fetching artifact: {ex.Message}");
+      }
+      finally
+      {
+        isLoading = false;
+        StateHasChanged(); // Ensure the component re-renders
+      }
+    }
+
+    private async Task SaveChangesAsync()
+    {
+      ShowMessage(ToastType.Success);
+    }
+
+    private async Task ShowDeleteConfirmationAsync()
+    {
+        var confirmation = await dialog.ShowAsync(
+            title: "Are you sure you want to delete this?",
+            message1: "This will delete the record. Once deleted can not be rolled back.",
+            message2: "Do you want to proceed?");
+
+        if (confirmation)
+        {
+            // do something
+        }
+        else
+        {
+            // do something
+        }
+    }
+}
+

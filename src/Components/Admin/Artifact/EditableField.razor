@@ -1,0 +1,33 @@
+@namespace mims.Components.Admin.Artifact
+@typeparam T
+
+<span @ondblclick="EnableEditing">
+    @if (isEditing)
+    {
+        <input @bind="Value" @onfocusout="DisableEditing" />
+    }
+    else
+    {
+        @ChildContent
+    }
+</span>
+
+@code {
+    [Parameter] public T Value { get; set; }
+    [Parameter] public EventCallback<T> ValueChanged { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+    private bool isEditing = false;
+
+    private void EnableEditing()
+    {
+        isEditing = true;
+    }
+
+    private async Task DisableEditing()
+    {
+        isEditing = false;
+        await ValueChanged.InvokeAsync(Value);
+    }
+}
+
