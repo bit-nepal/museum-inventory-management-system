@@ -69,4 +69,10 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
     return await _artifactContext.SaveChangesAsync();
   }
 
+  public async Task<Artifact> GetArtifact(int ArtifactId)
+  {
+    var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();
+    var artifact = await _artifactContext.Artifacts.FindAsync(ArtifactId);
+    return artifact;
+  }
 }

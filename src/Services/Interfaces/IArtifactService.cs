@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
 using mims.Models;
 
 namespace mims.Services.Interfaces;
@@ -10,6 +9,7 @@ public interface IArtifactService
 
   Task<int> UpdateArtifact(Artifact artifact);
   Task<IEnumerable<Artifact>> GetAllArtifacts();
+  Task<Artifact> GetArtifact(int ArtifactId);
 
   Task<int> GetArtifactCount();
   Task<IEnumerable<Artifact>> GetRecentlyAddedArtifacts(int noOfArtifacts);
