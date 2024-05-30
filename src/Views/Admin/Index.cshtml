@@ -9,9 +9,6 @@
     <h1 class="display-4">Welcome Admin</h1>
 </div> 
 
-<component type="typeof(NavBar)" render-mode="ServerPrerendered" />
- @( await Html.RenderComponentAsync<NavBar>
-    (RenderMode.ServerPrerendered) ) 
 <div class="d-flex justify-content-around">
     <component type="typeof(TotalArtifacts)" render-mode="ServerPrerendered" />
     <component type="typeof(mims.Components.Admin.Dashboard.RentedArtifacts)" render-mode="ServerPrerendered" />
