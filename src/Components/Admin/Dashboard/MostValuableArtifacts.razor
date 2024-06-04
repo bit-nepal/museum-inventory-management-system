@@ -1,13 +1,13 @@
-@namespace mims.Components.Admin.Dashboard
+﻿@namespace mims.Components.Admin.Dashboard
 @rendermode InteractiveServer
 
 @using mims.Models
 @using mims.Services.Interfaces
 @inject IArtifactService ArtifactService
 
-<Card Color="CardColor.Info" Class="mb-4" Style="width:20rem;">
+<Card Color="CardColor.Info" Class="mb-4" Style="width:24rem;">
     <CardBody>
-        <CardTitle>Recently Added Artifacts: </CardTitle>
+        <CardTitle>Most Valuable Artifacts: </CardTitle>
     </CardBody>
     <ul class="list-group list-group-flush">
         @if (isLoading)
@@ -30,13 +30,13 @@
 
 
 @code {
-  IEnumerable<Artifact> Artifacts;
-  private bool isLoading = true;
+    IEnumerable<Artifact> Artifacts;
+    private bool isLoading = true;
 
-  protected override async Task OnInitializedAsync()
-  {
-    int noOfRecords = 4;
-    Artifacts = await ArtifactService.GetRecentlyAddedArtifacts(noOfRecords);
-    isLoading = false;
-  }
+    protected override async Task OnInitializedAsync()
+    {
+        int noOfRecords = 4;
+        Artifacts = await ArtifactService.GetRecentlyAddedArtifacts(noOfRecords);
+        isLoading = false;
+    }
 }
