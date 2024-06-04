@@ -1,0 +1,19 @@
+﻿@namespace mims.Components.Admin.Dashboard
+@using mims.Services.Interfaces
+@using mims.Services
+
+@inject IArtifactService ArtifactService 
+<Card Color="CardColor.Primary" Class="mb-4" Style="width:20rem;">
+    <CardBody>
+        <CardTitle>Bought Artifacts:</CardTitle>
+        <CardText>@number</CardText>
+    </CardBody>
+</Card>
+
+@code {
+    int number;
+    protected override async Task OnInitializedAsync()
+    {
+        number = await ArtifactService.GetArtifactCount();
+    }
+}
