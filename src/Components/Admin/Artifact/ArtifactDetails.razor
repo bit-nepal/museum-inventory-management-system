@@ -140,6 +140,7 @@ else
     private async Task SaveChangesAsync()
     {
       ShowMessage(ToastType.Success);
+      ArtifactService.UpdateArtifact(artifact);
     }
 
     private async Task ShowDeleteConfirmationAsync()
@@ -151,11 +152,7 @@ else
 
         if (confirmation)
         {
-            // do something
-        }
-        else
-        {
-            // do something
+            await ArtifactService.DeleteArtifact(ArtifactId);
         }
     }
 }

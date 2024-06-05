@@ -51,7 +51,6 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
   public async Task<int> UpdateArtifact(Artifact artifact)
   {
     var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();
-    artifact.UpdatedAt = DateTime.Now;
     _artifactContext.Update(artifact);
     return await _artifactContext.SaveChangesAsync();
   }
@@ -61,5 +60,13 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
     var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();
     var artifact = await _artifactContext.Artifacts.FindAsync(ArtifactId);
     return artifact;
+  }
+
+  public async Task<int> DeleteArtifact(int ArtifactId)
+  {
+    var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();
+    Artifact? artifact = await _artifactContext.Artifacts.FindAsync(ArtifactId);
+    artifact.IsDeleted = true;
+    return await _artifactContext.SaveChangesAsync();
   }
 }
