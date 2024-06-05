@@ -12,8 +12,8 @@ using mims.Data;
 namespace mims.Migrations
 {
     [DbContext(typeof(ArtifactContext))]
-    [Migration("20240520030418_NullableField")]
-    partial class NullableField
+    [Migration("20240605115638_DB")]
+    partial class DB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,12 +34,12 @@ namespace mims.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)")
-                        .HasColumnName("created_date");
+                        .HasColumnName("created_at");
 
-                    b.Property<string>("DateOfAquisition")
-                        .HasColumnType("longtext")
+                    b.Property<DateOnly?>("DateOfAquisition")
+                        .HasColumnType("date")
                         .HasColumnName("date_of_aquisition");
 
                     b.Property<string>("Description")
@@ -47,13 +47,21 @@ namespace mims.Migrations
                         .HasColumnType("longtext")
                         .HasColumnName("description");
 
-                    b.Property<string>("EstimatedValue")
-                        .HasColumnType("longtext")
+                    b.Property<int?>("EstimatedValue")
+                        .HasColumnType("int")
                         .HasColumnName("estimated_value");
+
+                    b.Property<bool>("HasInscription")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("has_inscription");
 
                     b.Property<string>("Inscription")
                         .HasColumnType("longtext")
                         .HasColumnName("inscription");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("is_deleted");
 
                     b.Property<string>("Location")
                         .HasColumnType("longtext")
@@ -62,6 +70,10 @@ namespace mims.Migrations
                     b.Property<string>("Measurement")
                         .HasColumnType("longtext")
                         .HasColumnName("measurement");
+
+                    b.Property<int>("ModeOfAcquisition")
+                        .HasColumnType("int")
+                        .HasColumnName("mode_of_acquisition");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -78,15 +90,7 @@ namespace mims.Migrations
 
                     b.Property<string>("Number")
                         .HasColumnType("longtext")
-                        .HasColumnName("number_of_object");
-
-                    b.Property<string>("Period")
-                        .HasColumnType("longtext")
-                        .HasColumnName("period");
-
-                    b.Property<string>("PhotoNumber")
-                        .HasColumnType("longtext")
-                        .HasColumnName("photo_no");
+                        .HasColumnName("number_of_objects");
 
                     b.Property<string>("PhysicalCondition")
                         .HasColumnType("longtext")
@@ -100,29 +104,80 @@ namespace mims.Migrations
                         .HasColumnType("longtext")
                         .HasColumnName("place_of_receipt");
 
-                    b.Property<string>("SignatureOfReceiver")
-                        .HasColumnType("longtext")
-                        .HasColumnName("signature_of_receiver");
+                    b.Property<int?>("PrimaryPhotoId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<string>("Remarks")
+                        .HasColumnType("longtext")
+                        .HasColumnName("remarks");
+
+                    b.Property<string>("TimePeriod")
+                        .HasColumnType("longtext")
+                        .HasColumnName("time_period");
+
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)")
-                        .HasColumnName("updated_date");
-
-                    b.Property<string>("UsedMaterial")
-                        .HasColumnType("longtext")
-                        .HasColumnName("used_matriel");
+                        .HasColumnName("updated_at");
 
                     b.Property<string>("Weight")
                         .HasColumnType("longtext")
                         .HasColumnName("weight");
 
-                    b.Property<string>("remarks")
+                    b.HasKey("Id");
+
+                    b.HasIndex("PrimaryPhotoId");
+
+                    b.ToTable("Artifacts");
+                });
+
+            modelBuilder.Entity("mims.Models.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("image_id");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ArtifactId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageNo")
+                        .IsRequired()
                         .HasColumnType("longtext")
-                        .HasColumnName("remarks");
+                        .HasColumnName("image_no");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("image_url");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Artifacts");
+                    b.HasIndex("ArtifactId");
+
+                    b.ToTable("Image");
+                });
+
+            modelBuilder.Entity("mims.Models.Artifact", b =>
+                {
+                    b.HasOne("mims.Models.Image", "PrimaryPhoto")
+                        .WithMany()
+                        .HasForeignKey("PrimaryPhotoId");
+
+                    b.Navigation("PrimaryPhoto");
+                });
+
+            modelBuilder.Entity("mims.Models.Image", b =>
+                {
+                    b.HasOne("mims.Models.Artifact", null)
+                        .WithMany("Photos")
+                        .HasForeignKey("ArtifactId");
+                });
+
+            modelBuilder.Entity("mims.Models.Artifact", b =>
+                {
+                    b.Navigation("Photos");
                 });
 #pragma warning restore 612, 618
         }

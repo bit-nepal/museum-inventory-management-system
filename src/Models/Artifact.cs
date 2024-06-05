@@ -3,6 +3,8 @@ namespace mims.Models;
 public class Artifact
 {
   // format : [Column (string name, Properties:[Order = int],[TypeName = string])
+
+
   [Column("artifact_id")]
   public int Id { get; set; }
 
@@ -22,7 +24,7 @@ public class Artifact
   public string? Weight { get; set; }
 
   [Column("has_inscription")]
-  public bool? HasInscription { get; set; }
+  public bool HasInscription { get; set; } = false;
 
   [Column("inscription")]
   public string? Inscription { get; set; }
@@ -55,13 +57,16 @@ public class Artifact
   public int? EstimatedValue { get; set; }
 
   [Column("remarks")]
-  public string? remarks { get; set; }
+  public string? Remarks { get; set; }
 
-  [Column("created_date")]
-  public DateTime CreatedDate { get; set; }
+  [Column("is_deleted")]
+  public bool IsDeleted { get; set; } = false;
 
-  [Column("updated_date")]
-  public DateTime UpdatedDate { get; set; }
+  [Column("created_at")]
+  public DateTime CreatedAt { get; set; }
+
+  [Column("updated_at")]
+  public DateTime UpdatedAt { get; set; }
 
   [Column("mode_of_acquisition")]
   [AcquisitionModeValidation]
