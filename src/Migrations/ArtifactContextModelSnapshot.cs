@@ -31,9 +31,9 @@ namespace mims.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)")
-                        .HasColumnName("created_date");
+                        .HasColumnName("created_at");
 
                     b.Property<DateOnly?>("DateOfAquisition")
                         .HasColumnType("date")
@@ -48,13 +48,17 @@ namespace mims.Migrations
                         .HasColumnType("int")
                         .HasColumnName("estimated_value");
 
-                    b.Property<bool?>("HasInscription")
+                    b.Property<bool>("HasInscription")
                         .HasColumnType("tinyint(1)")
                         .HasColumnName("has_inscription");
 
                     b.Property<string>("Inscription")
                         .HasColumnType("longtext")
                         .HasColumnName("inscription");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("is_deleted");
 
                     b.Property<string>("Location")
                         .HasColumnType("longtext")
@@ -100,21 +104,21 @@ namespace mims.Migrations
                     b.Property<int?>("PrimaryPhotoId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Remarks")
+                        .HasColumnType("longtext")
+                        .HasColumnName("remarks");
+
                     b.Property<string>("TimePeriod")
                         .HasColumnType("longtext")
                         .HasColumnName("time_period");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)")
-                        .HasColumnName("updated_date");
+                        .HasColumnName("updated_at");
 
                     b.Property<string>("Weight")
                         .HasColumnType("longtext")
                         .HasColumnName("weight");
-
-                    b.Property<string>("remarks")
-                        .HasColumnType("longtext")
-                        .HasColumnName("remarks");
 
                     b.HasKey("Id");
 

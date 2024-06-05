@@ -18,44 +18,32 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
   public async Task<int> AddArtifact(Artifact artifact)
   {
     var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();
-    //if (ModelState.IsValid)
-    //{
-    //    _artifactContext.Artifacts.Add(obj);
-    //    _artifactContext.SaveChanges();
-    //    return RedirectToAction("Index");
-    //}
-    //return View(obj);
-    //Artifact a = new Artifact();
-    artifact.CreatedDate = new DateTime();
-    artifact.UpdatedDate = new DateTime();
     await _artifactContext.AddAsync(artifact);
     return await _artifactContext.SaveChangesAsync();
-
-
+    // return _artifactContext.SaveChanges();
   }
 
-  public string GetArtifactName()
-  {
-    return "DUMMY STRING";
-  }
   public async Task<IEnumerable<Artifact>> GetAllArtifacts()
   {
     var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();
-    IEnumerable<Artifact> artifacts = _artifactContext.Artifacts.ToList();
+    IEnumerable<Artifact> artifacts = _artifactContext.Artifacts
+                                                          .ToList()
+                                                          .Where(artifact => !artifact.IsDeleted);
     return artifacts;
   }
 
   public async Task<int> GetArtifactCount()
   {
     var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();
-    int count = await _artifactContext.Artifacts.CountAsync();
+    int count = await _artifactContext.Artifacts.Where(a => a.IsDeleted == false).CountAsync();
     return count;
   }
   public async Task<IEnumerable<Artifact>> GetRecentlyAddedArtifacts(int noOfArtifacts)
   {
     var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();
     IEnumerable<Artifact> artifacts = await _artifactContext.Artifacts
-      .OrderByDescending(artifact => artifact.CreatedDate)
+      .Where(artifact => !artifact.IsDeleted)
+      .OrderByDescending(artifact => artifact.CreatedAt)
       .Take(noOfArtifacts).ToListAsync();
     return artifacts;
   }
@@ -63,8 +51,6 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
   public async Task<int> UpdateArtifact(Artifact artifact)
   {
     var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();
-    artifact.CreatedDate = new DateTime();
-    artifact.UpdatedDate = new DateTime();
     _artifactContext.Update(artifact);
     return await _artifactContext.SaveChangesAsync();
   }
@@ -74,5 +60,13 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
     var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();
     var artifact = await _artifactContext.Artifacts.FindAsync(ArtifactId);
     return artifact;
+  }
+
+  public async Task<int> DeleteArtifact(int ArtifactId)
+  {
+    var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();
+    Artifact? artifact = await _artifactContext.Artifacts.FindAsync(ArtifactId);
+    artifact.IsDeleted = true;
+    return await _artifactContext.SaveChangesAsync();
   }
 }
