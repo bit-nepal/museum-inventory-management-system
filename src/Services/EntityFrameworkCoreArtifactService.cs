@@ -23,10 +23,6 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
     // return _artifactContext.SaveChanges();
   }
 
-  public string GetArtifactName()
-  {
-    return "DUMMY STRING";
-  }
   public async Task<IEnumerable<Artifact>> GetAllArtifacts()
   {
     var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();

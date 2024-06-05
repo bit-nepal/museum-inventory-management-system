@@ -4,7 +4,6 @@ namespace mims.Services.Interfaces;
 
 public interface IArtifactService
 {
-  string GetArtifactName();
   Task<int> AddArtifact(Artifact artifact);
 
   Task<int> UpdateArtifact(Artifact artifact);
