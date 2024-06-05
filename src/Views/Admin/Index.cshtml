@@ -98,6 +98,30 @@
 
 <h1>Dashboard</h1>
 
+<style>
+    .my-card-container {
+        transition: transform 0.3s;
+    }
 
-<component type="typeof(TotalArtifacts)" render-mode="ServerPrerendered" />
+        .my-card-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+</style>
 
+<div class="d-flex justify-content-around">
+    <div>
+        <component type="typeof(TotalArtifacts)" render-mode="ServerPrerendered" />
+    </div>
+    <div>
+        <component type="typeof(BoughtArtifacts)" render-mode="ServerPrerendered" />
+    </div>
+    <div>
+        <component type="typeof(RentedArtifacts)" render-mode="ServerPrerendered" />
+    </div>
+</div>
+
+<div class="d-flex justify-content-around">
+    <component type="typeof(MostValuableArtifacts)" render-mode="ServerPrerendered" />
+    <component type="typeof(RecentlyAddedArtifacts)" render-mode="ServerPrerendered" />
+</div>

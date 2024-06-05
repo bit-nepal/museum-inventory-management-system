@@ -3,10 +3,19 @@
 @using mims.Services
 
 @inject IArtifactService ArtifactService 
-<Card Color="CardColor.Primary" Class="mb-4" Style="width:20rem;">
+<Card Class="mb-4 rounded-4 bg-white border-0" Style="width:24rem; background-color:white">
     <CardBody>
-        <CardTitle>Bought Artifacts:</CardTitle>
-        <CardText>@number</CardText>
+        <div class="d-flex">
+            <Card Class="border-0" Style="background-color: #9eeaf9">
+                <CardBody>
+                    <h1> <i class="bi bi-bag-fill" style="color:#087990;"></i> </h1>
+                </CardBody>
+            </Card>
+            <div class="mx-auto">
+                <h1 class=""> &nbsp;&nbsp; @number</h1>
+                <h6 class="">Bought Artifacts</h6>
+            </div>
+        </div>
     </CardBody>
 </Card>
 
