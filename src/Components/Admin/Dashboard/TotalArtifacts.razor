@@ -3,16 +3,16 @@
 @using mims.Services
 
 @inject IArtifactService ArtifactService 
-<Card Class="my-card-container mb-4 rounded-4 bg-white border-0" Style="width:24rem; background-color:white">
+<Card Class="my-card-container mb-4 rounded-4 bg-white border-0 p-2" Style="width:24rem; background-color:white">
     <CardBody>
         <div class="d-flex">
-            <Card Class="border-0" Style="background-color: #cfe8ff">
+            <Card Class="border-0 rounded-3" Style="background-color: #cfe8ff">
                 <CardBody>
                     <h1> <i class="bi bi-box-fill" style="color:#3c91e6;"></i> </h1>
                 </CardBody>
             </Card>
             <div class="mx-auto">
-                <h1 class=""> &nbsp;&nbsp; @number</h1>
+                <h1 class=""> &nbsp;&nbsp; @TotalNoOfArtifacts</h1>
                 <h6 class="">Total Artifacts</h6>
             </div>
         </div>
@@ -21,9 +21,7 @@
 
 
 @code {
-    int number;
-    protected override async Task OnInitializedAsync()
-    {
-        number = await ArtifactService.GetArtifactCount();
-    }
+    [Parameter]
+    public int TotalNoOfArtifacts { get; set; }
+
 }

@@ -1,0 +1,54 @@
+﻿@namespace mims.Components.Admin
+@using mims.Components.Admin.Dashboard
+@inject mims.Services.Interfaces.IArtifactService ArtifactService
+
+<h1>Dashboard</h1>
+
+<style>
+    .my-card-container {
+        transition: transform 0.3s;
+    }
+
+        .my-card-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+</style>
+
+<div class="d-flex m-3 justify-content-around">
+    <div>
+        <TotalArtifacts TotalNoOfArtifacts="TotalArtifacts"/>
+    </div>
+    <div>
+        <BoughtArtifacts NoOfBoughtArtifacts="TotalArtifacts"/>
+    </div>
+    <div>
+        <RentedArtifacts NoOfRentedArtifacts="TotalArtifacts"/>
+    </div>
+</div>
+
+<div class="d-flex m-3 justify-content-around">
+    <MostValuableArtifacts artifacts="RecentlyAddedArtifacts"/>
+    <RecentlyAddedArtifacts artifacts="RecentlyAddedArtifacts"/>
+</div>
+
+@code{
+    private IEnumerable<mims.Models.Artifact> artifacts{ get; set; }
+
+    private int TotalArtifacts { get; set; } 
+
+    private IEnumerable<mims.Models.Artifact> RecentlyAddedArtifacts{ get; set; }
+
+    int NoOfRecentlyAddedArtifacts = 4;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (artifacts is null) // pull artifacts only one time for client-side filtering, sorting, and paging
+            artifacts = await ArtifactService.GetAllArtifacts();
+
+        TotalArtifacts = artifacts.Count();
+
+        RecentlyAddedArtifacts = artifacts.OrderByDescending(artifact => artifact.CreatedAt)
+      .Take(NoOfRecentlyAddedArtifacts).ToList();
+    }
+}
