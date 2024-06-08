@@ -42,7 +42,9 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
   public async Task<Artifact> GetArtifact(int ArtifactId)
   {
     var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();
-    var artifact = await _artifactContext.Artifacts.FindAsync(ArtifactId);
+    var artifact = await _artifactContext.Artifacts
+                                          .Include(a => a.PrimaryPhoto)
+                                          .FirstOrDefaultAsync(a => a.Id == ArtifactId);
     return artifact;
   }
 

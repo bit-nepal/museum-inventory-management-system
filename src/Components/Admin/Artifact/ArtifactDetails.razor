@@ -1,13 +1,28 @@
 @namespace mims.Components.Admin.Artifact
+
 @using mims.Services.Interfaces;
+@using mims.Services
+
 @inject IArtifactService ArtifactService
+@inject MediaService MediaService
 
 <Toasts class="p-3" Messages="messages" Placement="ToastsPlacement.TopRight" />
 <ConfirmDialog @ref="dialog" />
-<Alert Color="AlertColor.Light"><h1> Artifact Details !!</h1></Alert>
+
+<Alert Color="AlertColor.Light" >
+  <div class="d-flex justify-content-between h-10" >
+    <h1> Artifact Details !!</h1>  
+    <div class="mh-5">
+      @if(!isLoading && artifact!=null){
+        <img src="@Path.Combine(storagePath,artifact.PrimaryPhoto.ImageUrl)" Class="img-fluid" >
+      }
+    </div>
+  </div>
+</Alert>
+
 @if (isLoading)
 {
-            <li class="list-group-item">Loading...</li>
+  <li class="list-group-item">Loading...</li>
 }
 else if (artifact == null )
 {
@@ -134,6 +149,7 @@ else
     private bool isLoading = true;
     public mims.Models.Artifact artifact {get;set;}
     private ConfirmDialog dialog = default!;
+    private string storagePath {get;set;}
 
     List<ToastMessage> messages = new List<ToastMessage>();
 
@@ -155,6 +171,7 @@ else
       try
       {
         artifact = await ArtifactService.GetArtifact(ArtifactId);
+        storagePath = MediaService.baseStoragePath;
       }
       catch (Exception ex)
       {
