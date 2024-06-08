@@ -11,6 +11,9 @@ public class Artifact
   [Column("name")]
   public string Name { get; set; } = null!;
 
+  [Column("entry_no")]
+  public string EntryNo { get; set; } = null!;
+
   [Column("description")]
   public string Description { get; set; } = null!;
 
@@ -30,7 +33,7 @@ public class Artifact
   public string? Inscription { get; set; }
 
   [Column("date_of_aquisition")]
-  public DateOnly? DateOfAquisition { get; set; }
+  public DateOnly? DateOfAcquisition { get; set; }
 
   [Column("place_of_origin")]
   public string? PlaceOfOrigin { get; set; }

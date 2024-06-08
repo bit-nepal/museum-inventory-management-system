@@ -35,7 +35,7 @@ namespace mims.Migrations
                         .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
 
-                    b.Property<DateOnly?>("DateOfAquisition")
+                    b.Property<DateOnly?>("DateOfAcquisition")
                         .HasColumnType("date")
                         .HasColumnName("date_of_aquisition");
 
@@ -43,6 +43,11 @@ namespace mims.Migrations
                         .IsRequired()
                         .HasColumnType("longtext")
                         .HasColumnName("description");
+
+                    b.Property<string>("EntryNo")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("entry_no");
 
                     b.Property<int?>("EstimatedValue")
                         .HasColumnType("int")

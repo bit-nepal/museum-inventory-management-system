@@ -10,11 +10,11 @@
         <h4 class="alert-heading">
             Artifacts List
         </h4>
-        <Button Color="ButtonColor.Primary">
-            <NavLink href="/Admin/Artifacts/Create" class="nav-link" Match="NavLinkMatch.All">
+        <NavLink href="/Admin/Artifacts/Create" class="nav-link" Match="NavLinkMatch.All">
+          <Button Color="ButtonColor.Primary">
                 <i class="bi bi-plus-circle"/> New Artifact
-            </NavLink>
-        </Button>
+          </Button>
+        </NavLink>
     </div>
 </Alert>
 
@@ -37,20 +37,17 @@
       OnRowClick="OnRowClick"
       Responsive="true">
 
-    <GridColumn TItem="Artifact" HeaderText="Id" PropertyName="Id" SortKeySelector="item => item.Id">
-        @context.Id
+    <GridColumn TItem="Artifact" HeaderText="Entry No." PropertyName="EntryNo" SortKeySelector="item => item.EntryNo">
+        @context.EntryNo
     </GridColumn>
     <GridColumn TItem="Artifact" HeaderText="Artifact Name" PropertyName="Name" SortKeySelector="item => item.Name">
         @context.Name
     </GridColumn>
-    <GridColumn TItem="Artifact" HeaderText="Artifact Name" PropertyName="Name" SortKeySelector="item => item.Name">
-        @context.Name
+    <GridColumn TItem="Artifact" HeaderText="Location" PropertyName="Location" SortKeySelector="item => item.Location">
+        @context.Location
     </GridColumn>
-    <GridColumn TItem="Artifact" HeaderText="Artifact Name" PropertyName="Name" SortKeySelector="item => item.Name">
-        @context.Name
-    </GridColumn>
-    <GridColumn TItem="Artifact" HeaderText="Artifact Name" PropertyName="Name" SortKeySelector="item => item.Name">
-        @context.Name
+    <GridColumn TItem="Artifact" HeaderText="Date of Acquisition" PropertyName="DateOfAcquisition" SortKeySelector="item => item.DateOfAcquisition">
+        @context.DateOfAcquisition
     </GridColumn>
 </Grid>
 
