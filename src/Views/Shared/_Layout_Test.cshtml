@@ -16,16 +16,7 @@
     <link href="_content/Blazor.Bootstrap/blazor.bootstrap.css" rel="stylesheet" />
 </head>
 <body style="background-color: #eeeeee;">
-    <header>
-        <component type="typeof(mims.Components.Admin.NavBar)" render-mode="ServerPrerendered" />
-        <component type="typeof(mims.Components.NotificationConfig)" render-mode="ServerPrerendered" />
-     </header> 
-     <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-     </div>
-
+               @RenderBody()
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2024 - mims - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
