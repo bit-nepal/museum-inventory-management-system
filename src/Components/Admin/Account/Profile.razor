@@ -1,6 +1,43 @@
 ﻿@namespace mims.Components.Admin.Account
 @rendermode InteractiveServer
-<h3>Profile hellooo</h3>
+<style>
+        .profile-container {
+            max-width: 800px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+ </style>
+    <div class="container profile-container">
+        <div class="d-flex align-items-center mb-4">
+            <img src="https://via.placeholder.com/150" alt="Profile Picture" class="rounded-circle mr-3">
+            <div>
+                <h2 class="mb-0">Admin Name</h2>
+                <p class="mb-1 text-muted">Administrator</p>
+                <p class="mb-0 text-muted">Email: admin@example.com</p>
+            </div>
+        </div>
+        <div>
+            <h4>About Me</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl vel convallis tincidunt, velit nunc luctus nunc, non ultrices purus justo in dolor.</p>
+        </div>
+        <div class="row text-center mt-4">
+            <div class="col">
+                <h3>150</h3>
+                <p class="text-muted">Users</p>
+            </div>
+            <div class="col">
+                <h3>75</h3>
+                <p class="text-muted">Posts</p>
+            </div>
+            <div class="col">
+                <h3>24/7</h3>
+                <p class="text-muted">Support</p>
+            </div>
+        </div>
+    </div>
 
 @code {
 
