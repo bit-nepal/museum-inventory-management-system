@@ -3,29 +3,43 @@
 
 @using mims.Models
 @using mims.Services.Interfaces
+@inject NavigationManager Navigation
 @inject IArtifactService ArtifactService
 
-<Card Color="CardColor.Info" Class="mb-4" Style="width:30rem;">
+
+<Card Class="my-card-container border-0 rounded-4 bg-white" Style="width:32rem; height:22rem">
     <CardBody>
-        <CardTitle>Most Valuable Artifacts: </CardTitle>
+        <CardTitle>
+            <div class="d-flex justify-content-between">
+                Most Valuable Artifacts
+            </div>
+
+        </CardTitle>
+        <Grid TItem="Artifact"
+              AllowSorting="false"
+              Class="table table-hover"
+              DataProvider="ArtifactsDataProvider"
+              HeaderRowCssClass="text-black border-bottom-5"
+              AllowRowClick="true"
+              OnRowClick="OnRowClick"
+              Responsive="true">
+
+            <GridColumn TItem="Artifact" HeaderText="Artifact">
+                @context.Name
+            </GridColumn>
+
+            <GridColumn TItem="Artifact" HeaderText="Date">
+                @context.Name
+            </GridColumn>
+
+            <GridColumn TItem="Artifact" HeaderText="Date">
+                @context.Name
+            </GridColumn>
+
+        </Grid>
+
     </CardBody>
-    <ul class="list-group list-group-flush">
-        @if (isLoading)
-        {
-            <li class="list-group-item">Loading...</li>
-        }
-        else if (Artifacts == null || !Artifacts.Any())
-        {
-            <li class="list-group-item">No artifacts found !!</li>
-        }
-        else
-        {
-            foreach (var artifact in Artifacts)
-            {
-                <li class="list-group-item">@artifact.Name</li>
-            }
-        }
-    </ul>
+
 </Card>
 
 
@@ -33,10 +47,22 @@
     IEnumerable<Artifact> Artifacts;
     private bool isLoading = true;
 
-    protected override async Task OnInitializedAsync()
+    [Parameter]
+    public IEnumerable<Artifact> artifacts{ get; set; }
+    private HashSet<Artifact> selectedArtifacts = new();
+
+    private async Task<GridDataProviderResult<Artifact>> ArtifactsDataProvider(GridDataProviderRequest<Artifact> request)
     {
-        int noOfRecords = 4;
-        Artifacts = await ArtifactService.GetRecentlyAddedArtifacts(noOfRecords);
-        isLoading = false;
+        if (artifacts is null) // pull artifacts only one time for client-side filtering, sorting, and paging
+            artifacts = await ArtifactService.GetAllArtifacts(); // call a service or an API to pull the artifacts
+        return await Task.FromResult(request.ApplyTo(artifacts));
+    }
+
+    private async Task OnRowClick(GridRowEventArgs<Artifact> args)
+    {
+        @* args.Item.Id *@
+        Console.WriteLine("------------Row clicked " + args.Item.Id);
+        var artifactId = args.Item.Id;
+        Navigation.NavigateTo($"Admin/Artifacts/{artifactId}", forceLoad: true);
     }
 }

@@ -32,22 +32,6 @@ public class EntityFrameworkCoreArtifactService : IArtifactService
     return artifacts;
   }
 
-  public async Task<int> GetArtifactCount()
-  {
-    var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();
-    int count = await _artifactContext.Artifacts.Where(a => a.IsDeleted == false).CountAsync();
-    return count;
-  }
-  public async Task<IEnumerable<Artifact>> GetRecentlyAddedArtifacts(int noOfArtifacts)
-  {
-    var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();
-    IEnumerable<Artifact> artifacts = await _artifactContext.Artifacts
-      .Where(artifact => !artifact.IsDeleted)
-      .OrderByDescending(artifact => artifact.CreatedAt)
-      .Take(noOfArtifacts).ToListAsync();
-    return artifacts;
-  }
-
   public async Task<int> UpdateArtifact(Artifact artifact)
   {
     var _artifactContext = await _artifactContextFactory.CreateDbContextAsync();

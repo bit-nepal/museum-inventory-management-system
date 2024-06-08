@@ -11,7 +11,4 @@ public interface IArtifactService
   Task<Artifact> GetArtifact(int ArtifactId);
   Task<int> DeleteArtifact(int ArtifactId);
 
-  Task<int> GetArtifactCount();
-  Task<IEnumerable<Artifact>> GetRecentlyAddedArtifacts(int noOfArtifacts);
-
 }
