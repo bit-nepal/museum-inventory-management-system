@@ -1,4 +1,5 @@
 @namespace mims.Components.Admin.Artifact
+@using mims.Models
 @inject mims.Services.Interfaces.IArtifactService artifactService
 
 <Alert Color="AlertColor.Light">
@@ -14,8 +15,8 @@
 <ArtifactDetailForm OnValidSubmitHandler="HandleValidSubmit" ButtonText="Add Artifact" bindingArtifactObject="artifact" />
 
 @code {
-    public mims.Models.Artifact artifact = new mims.Models.Artifact();
-
+    public Artifact artifact = new Artifact();
+    public Image primaryPhoto = new Image();
     private List<BreadcrumbItem>? navItems;
     protected override void OnInitialized()
     {
@@ -25,6 +26,8 @@
             new BreadcrumbItem{ Text = "Artifacts", Href ="/Admin/Artifacts" },
             new BreadcrumbItem{ Text = "Add Artifact", IsCurrentPage = true }
         };
+
+        artifact.PrimaryPhoto = primaryPhoto;
     } 
     public async Task HandleValidSubmit()
     {

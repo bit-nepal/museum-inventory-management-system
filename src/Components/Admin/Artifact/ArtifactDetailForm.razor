@@ -1,8 +1,14 @@
-﻿@inject IArtifactService ArtifactService
+﻿@namespace mims.Components.Admin.Artifact
+
 @using System.ComponentModel.DataAnnotations
 @using Services.Interfaces
 @using mims.Models
-@namespace mims.Components.Admin.Artifact
+@using mims.Services
+
+@inject IArtifactService ArtifactService
+@inject IConfiguration config
+@inject MediaService mediaService
+
 
 <EditForm Model="@bindingArtifactObject" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
@@ -109,35 +115,43 @@
         <label for="Weight" class="form-label">Weight</label>
         <InputText id="Weight" class="form-control" @bind-Value="bindingArtifactObject.Weight" />
     </div>
-
-    @* <div class="mb-3"> *@
-    @*     <label for="PhotoNo" class="form-label">Photo No.</label> *@
-    @*     <InputText id="PhotoNo" class="form-control" @bind-Value="bindingArtifactObject.PrimaryPhoto.ImageNo " /> *@
-    @* </div> *@
-
+    <div class="mb-3">
+        <label for="image" class="form-label">Image</label>
+        <InputFile id="image" class="form-control" OnChange="LoadFiles"/>
+    </div>
+    <div class="mb-3">
+        <label for="PhotoNo" class="form-label">Photo No.</label>
+        <InputText id="PhotoNo" class="form-control" @bind-Value="bindingArtifactObject.PrimaryPhoto.ImageNo " />
+    </div>
 
     <button type="submit" id="submitButton" class="btn btn-primary">@ButtonText</button>
 </EditForm>
 
 @code {
+
+    private long maxFileSize = 1024 * 1024 * 5;
+    private int maxAllowedFiles =1;
+    private IBrowserFile file;
+
     [Parameter]
     public mims.Models.Artifact bindingArtifactObject {get;set;}
-
     [Parameter]
     public string ButtonText{ get; set; }
-
     [Parameter]
     public string artifactID{ get; set; }
-
     [Parameter]
     public EventCallback OnValidSubmitHandler { get; set; }
+
+    private async Task LoadFiles(InputFileChangeEventArgs e) => file = e.File;
+
     private async Task HandleValidSubmit()
     {
+        bindingArtifactObject.PrimaryPhoto.ImageUrl = await mediaService.CaptureFile(file,maxFileSize);
         if (OnValidSubmitHandler.HasDelegate)
         {
             await OnValidSubmitHandler.InvokeAsync(null);
         }
     }
-}
+ }
 
 
