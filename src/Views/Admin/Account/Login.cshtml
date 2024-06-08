@@ -1,4 +1,5 @@
 ﻿@page
 @model mims.Views.Admin.Account.LoginModel
-@{
-}
+@using mims.Components.Admin.Account;
+
+<component type="typeof(Login)" render-mode="ServerPrerendered" />

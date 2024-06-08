@@ -14,6 +14,7 @@ public class AccountController : Controller
     _logger = logger;
   }
 
+    [Route("Login")]
   public IActionResult Index()
   {
     return View(rootViewDirectory + "Login.cshtml");
