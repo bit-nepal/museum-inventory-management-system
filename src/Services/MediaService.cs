@@ -40,6 +40,7 @@ public class MediaService
     }
     catch (Exception)
     {
+      return "";
       throw;
     }
   }

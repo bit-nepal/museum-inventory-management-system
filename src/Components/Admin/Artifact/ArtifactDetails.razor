@@ -2,6 +2,7 @@
 
 @using mims.Services.Interfaces;
 @using mims.Services
+@using mims.Models
 
 @inject IArtifactService ArtifactService
 @inject MediaService MediaService
@@ -11,14 +12,16 @@
 
 <Alert Color="AlertColor.Light" >
   <div class="d-flex justify-content-between h-10" >
-    <h1> Artifact Details !!</h1>  
+    <h2> Artifact Details !!</h2>  
     <div class="mh-5">
       @if(!isLoading && artifact!=null){
-        <img src="@Path.Combine(storagePath,artifact.PrimaryPhoto.ImageUrl)" Class="img-fluid" >
+        @* <img src="@Path.Combine(storagePath,artifact.PrimaryPhoto.ImageUrl)" Class="img-fluid" > *@
       }
     </div>
   </div>
 </Alert>
+
+<Breadcrumb style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" Items="navItems" />
 
 @if (isLoading)
 {
@@ -28,141 +31,171 @@ else if (artifact == null )
 {
   <li class="list-group-item">No artifact found!!</li>
 }
-else
+else if( editingMode == false)
 {
-  <Card >
-    <CardBody>
-      <CardTitle>
-        <b>Entry No: &nbsp;&nbsp;</b>
-        <EditableField @bind-Value="artifact.EntryNo">
-                @artifact.EntryNo
-        </EditableField>
-      </CardTitle>
-      <CardTitle>
-        <b>Name : &nbsp;&nbsp;</b>
-        <EditableField @bind-Value="artifact.Name">
-                @artifact.Name
-        </EditableField>
-      </CardTitle>
-      <CardTitle>
-        <b>Description:  &nbsp;&nbsp;</b>
-        <EditableField @bind-Value="artifact.Description">
-                @artifact.Description
-        </EditableField>
-      </CardTitle>
-      <CardTitle>
-        <b>Time/Period:  &nbsp;&nbsp;</b>
-        <EditableField @bind-Value="artifact.TimePeriod">
-                @artifact.TimePeriod
-        </EditableField>
-      </CardTitle>
-      <CardTitle>
-        <b>Inscription:  &nbsp;&nbsp;</b>
-        <EditableField @bind-Value="artifact.Inscription">
+  <div class="row justify-content-around g-2  mb-1" >
+    <!-- -----first row------ -->        
+    <Card Class="rounded-4 bg-white border-0 col-12">
+      <CardBody>
+        <div class="row">
+
+          <div class="col-12 col-md-6">
+                <div class="card mx-auto" style="max-width: 80%; height:100%">
+                    <div class="card-body p-0" style="width: 100%; height: 100%; overflow: hidden; position: relative;">
+                        <img src="@Path.Combine(storagePath, artifact.PrimaryPhoto.ImageUrl)" 
+                          class="img-fluid rounded mx-auto d-block" style="position: absolute; top: 50%; left: 50%; width: auto; height: auto; min-width: 100%; min-height: 100%; transform: translate(-50%, -50%); object-fit: cover;" />
+                    </div>
+                </div>
+          </div>
+
+          <div class="col-12 col-md-6 order-md-first">
+            <div class="d-flex m-1 border-bottom">
+              <label for="entryno" class="form-label mx-3 font-weight-bold">Entry No: </label>&nbsp; &nbsp; 
+              @artifact.EntryNo 
+            </div>
+
+            <div class="d-flex m-1 border-bottom">
+              <label for="name" class="form-label mx-3 font-weight-bold">Name: </label>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; 
+              @artifact.Name
+            </div>
+            <div class="d-flex m-1 border-bottom">
+              <label for="description" class="form-label mx-3 font-weight-bold">Description: </label>&nbsp;
+              @artifact.Description
+            </div>
+            <div class="d-flex m-1 border-bottom">
+              <label for="timePeriod" class="form-label mx-3 font-weight-bold">Time/Period: </label>
+              @artifact.TimePeriod
+            </div>
+            @* ********* Inscription ******** *@
+            <div class="d-flex m-1 border-bottom">
+              <label for="hasInscription" class="form-label mx-3 font-weight-bold">Inscription: </label>&nbsp;&nbsp;&nbsp;&nbsp;
                 @artifact.Inscription
-        </EditableField>
-      </CardTitle>
-      <CardTitle>
-        <b>Date Of Acquisition: &nbsp;&nbsp;</b>
-        <EditableField @bind-Value="artifact.DateOfAcquisition">
-                @artifact.DateOfAcquisition
-        </EditableField>
-      </CardTitle>
-      <CardTitle>
-        <b>Place Of Origin:  &nbsp;&nbsp;</b>
-        <EditableField @bind-Value="artifact.PlaceOfOrigin">
-                @artifact.PlaceOfOrigin
-        </EditableField>
-      </CardTitle>
-      <CardTitle>
-        <b>Place Of Receipt:  &nbsp;&nbsp;</b>
-        <EditableField @bind-Value="artifact.PlaceOfReceipt">
-                @artifact.PlaceOfReceipt
-        </EditableField>
-      </CardTitle>
+            </div>
+            <div class="d-flex m-1 border-bottom">
+              <label for="Location" class="form-label mx-3 font-weight-bold">Location: </label>&nbsp; &nbsp; &nbsp; &nbsp; 
+              @artifact.Location
+            </div>  
+            <div class="d-flex m-1">
+              <label for="PhotoNo" class="form-label mx-3 font-weight-bold">Photo No.: </label>
+              @artifact.PrimaryPhoto.ImageNo
+            </div>
+          </div>
+        </div>
+      </CardBody>
+    </Card>
 
-      <CardTitle>
-        <b>Name Of Donor: &nbsp;&nbsp;</b>
-        <EditableField @bind-Value="artifact.NameOfDonor">
-                @artifact.NameOfDonor
-        </EditableField>
-      </CardTitle>
-      <CardTitle>
-        <b>Location :  &nbsp;&nbsp;</b>
-        <EditableField @bind-Value="artifact.Location">
-                @artifact.Location
-        </EditableField>
-      </CardTitle>
-      <CardTitle>
-        <b>Physical Condition:  &nbsp;&nbsp;</b>
-        <EditableField @bind-Value="artifact.PhysicalCondition">
-                @artifact.PhysicalCondition
-        </EditableField>
-      </CardTitle>
-      <CardTitle>
-        <b>Name Of Artist:  &nbsp;&nbsp;</b>
-        <EditableField @bind-Value="artifact.NameOfArtist">
-                @artifact.NameOfArtist
-        </EditableField>
-      </CardTitle>
-      <CardTitle>
-        <b>Estimated Value:  &nbsp;&nbsp;</b>
-        <EditableField @bind-Value="artifact.EstimatedValue">
-                @artifact.EstimatedValue
-        </EditableField>
-      </CardTitle>
-      <CardTitle>
-        <b>Number Of Objects:  &nbsp;&nbsp;</b>
-        <EditableField @bind-Value="artifact.Number">
-                @artifact.Number
-        </EditableField>
-      </CardTitle>
-      <CardTitle>
-        <b>Remarks: &nbsp;&nbsp;</b>
-        <EditableField @bind-Value="artifact.Remarks">
-                @artifact.Remarks
-        </EditableField>
-      </CardTitle>
-      <CardTitle>
-        <b>Size:  &nbsp;&nbsp;</b>
-        <EditableField @bind-Value="artifact.Measurement">
-                @artifact.Measurement
-        </EditableField>
-      </CardTitle>
-      <CardTitle>
-        <b>Weight:  &nbsp;&nbsp;</b>
-        <EditableField @bind-Value="artifact.Weight">
-                @artifact.Weight
-        </EditableField>
-      </CardTitle>
+    <!-- ------Second Row-------- -->
+    <Card Class="rounded-4 bg-white border-0 p-3 col-12 col-md-6">
+      <CardBody>
+        <div class="d-flex m-1 border-bottom">
+          <label for="dateOfAcquisition" class="form-label mx-3 font-weight-bold">Date Of Acquisition: </label>
+          @artifact.DateOfAcquisition.ToString()
+        </div>
 
-    </CardBody>
-  </Card>
+        <div class="d-flex m-1 border-bottom">
+          <label class="form-label mx-3 font-weight-bold">Mode of Acquisition: </label>
+          @artifact.ModeOfAcquisition                         
+        </div>
+
+        <div class="d-flex m-1 border-bottom">
+          <label for="placeOfOrigin" class="form-label mx-3 font-weight-bold">Place Of Origin : </label>
+          @artifact.PlaceOfOrigin 
+        </div>  
+
+        <div class="d-flex m-1 border-bottom">
+          <label for="PlaceOfReceipt" class="form-label mx-3 font-weight-bold">Place Of Receipt: </label>
+          @artifact.PlaceOfReceipt
+        </div>  
+
+        <div class="d-flex m-1">
+          <label for="NameOfDonor" class="form-label mx-3 font-weight-bold">Name Of Donor: </label>&nbsp; 
+          @artifact.NameOfDonor 
+        </div>  
+      </CardBody>
+    </Card>
+
+    <Card Class="rounded-4 bg-white border-0 p-3 col-12 col-md-6 ">
+      <CardBody>
+        <div class="d-flex m-1 border-bottom">
+          <label for="PhysicalCondition" class="form-label mx-3 font-weight-bold">Physical Condition: </label>&nbsp;
+          @artifact.PhysicalCondition
+        </div>  
+
+        <div class="d-flex m-1 border-bottom">
+          <label for="NumberOfObjects" class="form-label mx-3 font-weight-bold">Number Of Objects: </label>
+          @artifact.Number
+        </div>  
+
+        <div class="d-flex m-1 border-bottom">
+          <label for="NameOfArtist" class="form-label mx-3 font-weight-bold">Name of Artist: </label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+          @artifact.NameOfArtist
+        </div>  
+
+        <div class="d-flex m-1 border-bottom">
+          <label for="EstimatedValue" class="form-label mx-3 font-weight-bold">Estimated Value: </label> &nbsp; &nbsp; &nbsp; &nbsp;
+          @artifact.EstimatedValue
+        </div>
+
+        <div class="d-flex m-1 border-bottom">
+          <label for="Size" class="form-label mx-3 font-weight-bold">Size: </label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+          @artifact.Measurement
+        </div>
+
+        <div class="d-flex m-1">
+          <label for="Weight" class="form-label mx-3 font-weight-bold">Weight</label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+          @artifact.Weight
+        </div>
+      </CardBody>
+    </Card>
+
+
+    <Card Class="rounded-4 bg-white border-0 p-1 col-12">
+      <CardBody>
+        <div class="d-flex">
+          <label for="Remarks" class="form-label mx-3 font-weight-bold">Remarks: </label>
+          @artifact.Remarks
+        </div>
+      </CardBody>
+    </Card>
+  </div>
+
+  <Button Color="ButtonColor.Primary" @onclick="EditArtifact" class="m-2">Edit</Button>
+  <Button Color="ButtonColor.Danger" @onclick="ShowDeleteConfirmationAsync" class="m-2"> Delete Artifact</Button>
+
 }
-<br>
+@if(!isLoading && artifact is not null && editingMode)
+{
+  <ArtifactDetailForm OnValidSubmitHandler="HandleValidSubmit" ButtonText="Save Changes" bindingArtifactObject="artifact" />
+  <Button Color="ButtonColor.Light" @onclick="CancleEditing">Cancel</Button>
+}
 
-<Button Color="ButtonColor.Primary" @onclick="SaveChangesAsync"> Save Changes</Button>
-<Button Color="ButtonColor.Danger" @onclick="ShowDeleteConfirmationAsync"> Delete Artifact</Button>
 @code {
-    [Parameter]
-    public int ArtifactId{ get; set; }
-    private bool isLoading = true;
-    public mims.Models.Artifact artifact {get;set;}
-    private ConfirmDialog dialog = default!;
-    private string storagePath {get;set;}
+  [Parameter]
+  public int ArtifactId{ get; set; }
+  private bool isLoading = true;
+  private bool editingMode = false;
+  public mims.Models.Artifact artifact {get;set;}
+  private ConfirmDialog dialog = default!;
+  private string storagePath {get;set;}
+  private List<BreadcrumbItem>? navItems = new List<BreadcrumbItem>
+  {
+        new BreadcrumbItem{ Text = "Dashboard", Href ="/Admin" },
+        new BreadcrumbItem{ Text = "Artifacts", Href ="/Admin/Artifacts" },
+        new BreadcrumbItem{ Text = "Details", IsCurrentPage = true }
+  };
 
-    List<ToastMessage> messages = new List<ToastMessage>();
+  List<ToastMessage> messages = new List<ToastMessage>();
 
-    private void ShowMessage(ToastType toastType) => messages.Add(CreateToastMessage(toastType));
+  private void ShowMessage(ToastType toastType) => messages.Add(CreateToastMessage(toastType));
 
-    private ToastMessage CreateToastMessage(ToastType toastType)
+  private ToastMessage CreateToastMessage(ToastType toastType)
     => new ToastMessage
-        {
-            Type = toastType,
-            Title = "Blazor Bootstrap",
-            HelpText = $"{DateTime.Now}",
-            Message = $"Hello, world! This is a toast message. DateTime: {DateTime.Now}",
-        };
+    {
+      Type = toastType,
+      Title = "Blazor Bootstrap",
+      HelpText = $"{DateTime.Now}",
+      Message = $"Hello, world! This is a toast message. DateTime: {DateTime.Now}",
+    };
 
     protected async override Task OnInitializedAsync()
     {
@@ -184,24 +217,33 @@ else
         StateHasChanged(); // Ensure the component re-renders
       }
     }
-
+    public async Task HandleValidSubmit() => await SaveChangesAsync();
     private async Task SaveChangesAsync()
     {
       ShowMessage(ToastType.Success);
       ArtifactService.UpdateArtifact(artifact);
+    } 
+
+    private async Task EditArtifact() {
+      editingMode = true;
+    }
+
+    private async Task CancleEditing() {
+      artifact= await ArtifactService.GetArtifact(ArtifactId);
+      editingMode = false;
     }
 
     private async Task ShowDeleteConfirmationAsync()
     {
-        var confirmation = await dialog.ShowAsync(
-            title: "Are you sure you want to delete this?",
-            message1: "This will delete the record. Once deleted can not be rolled back.",
-            message2: "Do you want to proceed?");
+      var confirmation = await dialog.ShowAsync(
+          title: "Are you sure you want to delete this?",
+          message1: "This will delete the record. Once deleted can not be rolled back.",
+          message2: "Do you want to proceed?");
 
-        if (confirmation)
-        {
-            await ArtifactService.DeleteArtifact(ArtifactId);
-        }
+      if (confirmation)
+      {
+        await ArtifactService.DeleteArtifact(ArtifactId);
+      }
     }
 }
 
