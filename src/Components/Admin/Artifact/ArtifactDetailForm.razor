@@ -7,51 +7,55 @@
 
 @inject IArtifactService ArtifactService
 @inject IConfiguration config
-@inject MediaService mediaService
+@inject MediaService MediaService
 <style>
 .form-check{
     border: 1px solid #dee2e6;
     border-radius: 5px;
 }
+
+.col-custom-15 {
+    flex: 0 0 125%;
+    max-width: 150%;
+  }
 </style>
 
 <EditForm Model="@bindingArtifactObject" OnValidSubmit="@HandleValidSubmit" class="form-inline">
   <DataAnnotationsValidator />
   <ValidationSummary />
-  <div class="row justify-content-around g-2" >
+  <div class="row justify-content-around g-2 gx-3" >
     <!-- -----first row------ -->        
-    <Card Class="rounded-4 bg-white border-0 p-3 col-12">
+    <Card Class="rounded-4 bg-white border-0 col-12">
       <CardBody>
         <div class="row">
-
-          <div class="col-12 col-md-6">
-
-            <img src="https://via.placeholder.com/500x225" class="align-self-center" />
-            <div class="mb-3">
-              @* <label for="image" class="form-label">Image</label> *@
-              <InputFile id="image" class="form-control " OnChange="LoadFiles"/>
+<div class="col-12 col-md-6">
+                <div class="card mx-auto" style="max-width: 80%; height:80%">
+                    <div class="card-body p-0" style="width: 100%; height: 100%; overflow: hidden; position: relative;">
+                        <img src="@PrimaryPhotoUrl" 
+                          class="img-fluid rounded mx-auto d-block" style="position: absolute; top: 50%; left: 50%; width: auto; height: auto; min-width: 100%; min-height: 100%; transform: translate(-50%, -50%); object-fit: cover;" />
+                    </div>
+                </div>
+            <div class="mb-1">
+              <InputFile id="image" class="form-control" OnChange="LoadFiles" />
             </div>
-            <div class="d-flex mb-3">
-              <label for="PhotoNo" class="form-label mx-3">Photo No.</label>
-              <InputText id="PhotoNo" class="form-check p-0 flex-grow-1" @bind-Value="bindingArtifactObject.PrimaryPhoto.ImageNo " />
-            </div>
+
           </div>
 
           <div class="col-12 col-md-6 order-md-first">
-            <div class="d-flex mb-3">
+            <div class="d-flex mb-1">
               <label for="entryno" class="form-label mx-3">Entry No : </label>&nbsp; &nbsp; 
               <InputText id="entryno" class="form-check p-0 flex-grow-1" @bind-Value="bindingArtifactObject.EntryNo" />
             </div>
 
-            <div class="d-flex mb-3">
+            <div class="d-flex mb-1">
               <label for="name" class="form-label mx-3">Name</label>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; 
               <InputText id="name" class="form-check p-0 flex-grow-1" @bind-Value="bindingArtifactObject.Name" />
             </div>
-            <div class="d-flex mb-3">
+            <div class="d-flex mb-1">
               <label for="description" class="form-label mx-3">Description</label>&nbsp;
               <InputTextArea id="description" class="form-check p-0 flex-grow-1" @bind-Value="bindingArtifactObject.Description" />
             </div>
-            <div class="d-flex mb-3">
+            <div class="d-flex mb-1">
               <label for="timePeriod" class="form-label mx-3">Time/Period</label>
               <InputText id="timePeriod" class="form-check p-0 flex-grow-1" @bind-Value="bindingArtifactObject.TimePeriod" />
             </div>
@@ -60,16 +64,21 @@
               <label for="hasInscription" class="form-label mx-3">Inscription</label>&nbsp;&nbsp;&nbsp;&nbsp;
               <Switch id="hasInscription" class="d-inline"  @bind-Value="bindingArtifactObject.HasInscription" />
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
               @if(bindingArtifactObject.HasInscription)
               {
                 <InputTextArea id="inscription" class="form-control" @bind-Value="bindingArtifactObject.Inscription" />
               }
             </div>
-            <div class="d-flex mb-3">
+            <div class="d-flex mb-1">
               <label for="Location" class="form-label mx-3">Location</label>&nbsp; &nbsp; &nbsp; &nbsp; 
               <InputText id="Location" class="form-check p-0 flex-grow-1" @bind-Value="bindingArtifactObject.Location" />
-            </div>  
+            </div> 
+            <div class="d-flex">
+              <label for="PhotoNo" class="form-label mx-3">Photo No.</label>
+              <InputText id="PhotoNo" class="form-check p-0 flex-grow-1" @bind-Value="bindingArtifactObject.PrimaryPhoto.ImageNo " />
+            </div>
+
           </div>
         </div>
       </CardBody>
@@ -78,23 +87,12 @@
     <!-- ------Second Row-------- -->
     <Card Class="rounded-4 bg-white border-0 p-3 col-12 col-md-6">
       <CardBody>
-        <div class="d-flex mb-3">
+        <div class="d-flex mb-1">
           <label for="dateOfAcquisition" class="form-label mx-3">Date Of Acquisition</label>
           <DateInput id="dateOfAcquisition" class="form-check p-0 flex-grow-1" @bind-Value="bindingArtifactObject.DateOfAcquisition" />
         </div>
 
-        <div class="d-flex mb-3">
-
-          @* <InputRadioGroup @bind-Value="@bindingArtifactObject.ModeOfAcquisition"> *@
-          @*   Mode of Acquisition: *@
-          @*   <br> *@
-          @*   @foreach( var mode in Enum.GetValues(typeof(AcquisitionMode)).Cast<AcquisitionMode>()) *@
-          @*   { *@
-          @*     <InputRadio id="@mode" class="form-check-input" Value="mode" /> *@
-          @*     <label for="@mode" class="form-check-label">@mode</label> *@
-          @*     <br> *@
-          @*   } *@
-          @* </InputRadioGroup> *@
+        <div class="d-flex mb-1">
           <label class="form-label mx-3">Mode of Acquisition</label>
           <InputSelect @bind-Value="@bindingArtifactObject.ModeOfAcquisition" class="form-check p-0 flex-grow-1">
               @foreach ( var mode in Enum.GetValues(typeof(AcquisitionMode)).Cast<AcquisitionMode>()) {
@@ -103,17 +101,17 @@
           </InputSelect>
           </div>
 
-          <div class="d-flex mb-3">
+          <div class="d-flex mb-1">
             <label for="placeOfOrigin" class="form-label mx-3">Place Of Origin : </label>
             <InputText id="placeOfOrigin" class="form-check p-0 flex-grow-1" @bind-Value="bindingArtifactObject.PlaceOfOrigin" />
           </div>  
 
-          <div class="d-flex mb-3">
+          <div class="d-flex mb-1">
             <label for="PlaceOfReceipt" class="form-label mx-3">Place Of Receipt</label>
             <InputText id="PlaceOfReceipt" class="form-check p-0 flex-grow-1" @bind-Value="bindingArtifactObject.PlaceOfReceipt" />
           </div>  
 
-          <div class="d-flex mb-3">
+          <div class="d-flex">
             <label for="NameOfDonor" class="form-label mx-3">Name Of Donor</label>&nbsp; 
             <InputText id="NameOfDonor" class="form-check p-0 flex-grow-1" @bind-Value="bindingArtifactObject.NameOfDonor" />
           </div>  
@@ -122,33 +120,33 @@
 
     <Card Class="rounded-4 bg-white border-0 p-3 col-12 col-md-6 ">
       <CardBody>
-        <div class="d-flex mb-3">
+        <div class="d-flex mb-1">
           <label for="PhysicalCondition" class="form-label mx-3">Physical Condition</label>&nbsp;
           <InputText id="PhysicalCondition" class="form-check p-0 flex-grow-1" @bind-Value="bindingArtifactObject.PhysicalCondition" />
         </div>  
 
-        <div class="d-flex mb-3">
+        <div class="d-flex mb-1">
           <label for="NumberOfObjects" class="form-label mx-3">Number Of Objects</label>
           <InputText id="NumberOfObjects" class="form-check p-0 flex-grow-1" @bind-Value="bindingArtifactObject.Number" />
         </div>  
 
-        <div class="d-flex mb-3">
+        <div class="d-flex mb-1">
           <label for="NameOfArtist" class="form-label mx-3">Name of Artist</label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
           <InputText id="NameOfArtist" class="form-check p-0 flex-grow-1" @bind-Value="bindingArtifactObject.NameOfArtist" />
         </div>  
 
-        <div class="d-flex mb-3">
+        <div class="d-flex mb-1">
           <label for="EstimatedValue" class="form-label mx-3">Estimated Value</label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; 
 
           <CurrencyInput TValue="int?" id="EstimatedValue" @bind-Value="bindingArtifactObject.EstimatedValue" Locale="en-NP" Placeholder="Enter amount" />
         </div>
 
-        <div class="d-flex mb-3">
+        <div class="d-flex mb-1">
           <label for="Size" class="form-label mx-3">Size</label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
           <InputText id="Size" class="form-check p-0 flex-grow-1" @bind-Value="bindingArtifactObject.Measurement" />
         </div>
 
-        <div class="d-flex mb-3">
+        <div class="d-flex">
           <label for="Weight" class="form-label mx-3">Weight</label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
           <InputText id="Weight" class="form-check p-0 flex-grow-1" @bind-Value="bindingArtifactObject.Weight" />
         </div>
@@ -156,9 +154,9 @@
     </Card>
 
 
-    <Card Class="rounded-4 bg-white border-0 p-3 col-12">
+    <Card Class="rounded-4 bg-white border-0 p-1 col-12">
       <CardBody>
-        <div class="d-flex mb-3">
+        <div class="d-flex">
           <label for="Remarks" class="form-label mx-3">Remarks</label>
           <InputText id="Remarks" class="form-check p-0 flex-grow-1" @bind-Value="bindingArtifactObject.Remarks" />
         </div>
@@ -169,30 +167,65 @@
 </EditForm>
 
 @code {
-
+  private string PrimaryPhotoUrl {get;set;}
   private long maxFileSize = 1024 * 1024 * 5;
   private int maxAllowedFiles =1;
   private IBrowserFile file;
 
+  private string storagePath {get;set;}
   [Parameter]
   public mims.Models.Artifact bindingArtifactObject {get;set;}
   [Parameter]
   public string ButtonText{ get; set; }
-  [Parameter]
-  public string artifactID{ get; set; }
+
   [Parameter]
   public EventCallback OnValidSubmitHandler { get; set; }
 
-  private async Task LoadFiles(InputFileChangeEventArgs e) => file = e.File;
+ 
+  private async Task LoadFiles(InputFileChangeEventArgs e)
+   {
+        file = e.File;
+        PrimaryPhotoUrl = await ConvertFileToBase64(file);
+        StateHasChanged(); // Ensure the UI updates after changing the selected image
+    }
+
+    private async Task<string> ConvertFileToBase64(IBrowserFile file)
+    {
+        using (var memoryStream = new MemoryStream())
+        {
+            await file.OpenReadStream().CopyToAsync(memoryStream);
+            var bytes = memoryStream.ToArray();
+            return $"data:{file.ContentType};base64,{Convert.ToBase64String(bytes)}";
+        }
+    }
 
   private async Task HandleValidSubmit()
   {
-    bindingArtifactObject.PrimaryPhoto.ImageUrl = await mediaService.CaptureFile(file,maxFileSize);
+    Console.WriteLine("handling valid submit");
+    if (file != null)
+    {
+        Console.WriteLine("file not null");    
+        string imageName = await MediaService.CaptureFile(file, maxFileSize);
+        Console.WriteLine("Image new name :  " + imageName);
+        if (!string.IsNullOrEmpty(imageName))
+        {
+            bindingArtifactObject.PrimaryPhoto.ImageUrl = imageName;
+        }
+    } else
+      {
+        Console.WriteLine("file is null");    
+      }
     if (OnValidSubmitHandler.HasDelegate)
     {
       await OnValidSubmitHandler.InvokeAsync(null);
     }
   }
+  protected async override Task OnInitializedAsync()
+  {
+        storagePath = MediaService.baseStoragePath;
+        PrimaryPhotoUrl = Path.Combine(storagePath, bindingArtifactObject.PrimaryPhoto.ImageUrl);
+  }
+
 }
 
 
