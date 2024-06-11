@@ -55,16 +55,16 @@
               Responsive="true"
               EmptyText="No artifacts to display">
 
-            <GridColumn TItem="Artifact" HeaderText="Artifact" >
+            <GridColumn TItem="Artifact" HeaderText="Entry No.">
+                @context.EntryNo
+            </GridColumn>
+
+            <GridColumn TItem="Artifact" HeaderText="Artifact">
                 @context.Name
             </GridColumn>
 
-            <GridColumn TItem="Artifact" HeaderText="Date">
-                @context.Name
-            </GridColumn>
-
-            <GridColumn TItem="Artifact" HeaderText="Date">
-                @context.Name
+            <GridColumn TItem="Artifact" HeaderText="Added At">
+                Rs @context.CreatedAt
             </GridColumn>
 
         </Grid>
