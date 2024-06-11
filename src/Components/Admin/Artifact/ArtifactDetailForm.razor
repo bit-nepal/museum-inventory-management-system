@@ -223,7 +223,10 @@
   protected async override Task OnInitializedAsync()
   {
         storagePath = MediaService.baseStoragePath;
-        PrimaryPhotoUrl = Path.Combine(storagePath, bindingArtifactObject.PrimaryPhoto.ImageUrl);
+        if( bindingArtifactObject.PrimaryPhoto.ImageUrl is not null)
+        {
+          PrimaryPhotoUrl = Path.Combine(storagePath, bindingArtifactObject.PrimaryPhoto.ImageUrl);
+        }
   }
 
 }
