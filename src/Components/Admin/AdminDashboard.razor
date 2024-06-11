@@ -1,5 +1,6 @@
 ﻿@namespace mims.Components.Admin
 @using mims.Components.Admin.Dashboard
+@using mims.Models
 @inject mims.Services.Interfaces.IArtifactService ArtifactService
 
 <h1>Dashboard</h1>
@@ -9,10 +10,10 @@
         transition: transform 0.3s;
     }
 
-        .my-card-container:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-        }
+    .my-card-container:hover {
+          transform: scale(1.05);
+          box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
 </style>
 
 <div class="d-flex m-3 justify-content-around">
@@ -20,35 +21,39 @@
         <TotalArtifacts TotalNoOfArtifacts="TotalArtifacts"/>
     </div>
     <div>
-        <BoughtArtifacts NoOfBoughtArtifacts="TotalArtifacts"/>
+        <BoughtArtifacts NoOfBoughtArtifacts="BoughtArtifacts"/>
     </div>
     <div>
-        <RentedArtifacts NoOfRentedArtifacts="TotalArtifacts"/>
+        <RentedArtifacts NoOfRentedArtifacts="RentedArtifacts"/>
     </div>
 </div>
 
 <div class="d-flex m-3 justify-content-around">
     <MostValuableArtifacts artifacts="RecentlyAddedArtifacts"/>
-    <RecentlyAddedArtifacts artifacts="RecentlyAddedArtifacts"/>
+    <RecentlyAddedArtifacts artifacts="MostValuableArtifacts"/>
 </div>
 
 @code{
-    private IEnumerable<mims.Models.Artifact> artifacts{ get; set; }
-
     private int TotalArtifacts { get; set; } 
-
+    private int BoughtArtifacts { get; set;}
+    private int RentedArtifacts { get; set;}
+    private IEnumerable<mims.Models.Artifact> artifacts{ get; set; }
     private IEnumerable<mims.Models.Artifact> RecentlyAddedArtifacts{ get; set; }
+    private IEnumerable<mims.Models.Artifact> MostValuableArtifacts{ get; set; }
 
-    int NoOfRecentlyAddedArtifacts = 4;
+    int NoOfArtifactsToShowInList = 4;
 
     protected override async Task OnInitializedAsync()
     {
         if (artifacts is null) // pull artifacts only one time for client-side filtering, sorting, and paging
             artifacts = await ArtifactService.GetAllArtifacts();
 
-        TotalArtifacts = artifacts.Count();
-
+        TotalArtifacts   = artifacts.Count();
+        BoughtArtifacts  = artifacts.Where(a  =>  a.ModeOfAcquisition ==  AcquisitionMode.Buying).Count();
+        RentedArtifacts  = artifacts.Where(a  =>  a.ModeOfAcquisition ==  AcquisitionMode.Rent).Count();
         RecentlyAddedArtifacts = artifacts.OrderByDescending(artifact => artifact.CreatedAt)
-      .Take(NoOfRecentlyAddedArtifacts).ToList();
+                                .Take(NoOfArtifactsToShowInList ).ToList();
+        MostValuableArtifacts = artifacts.OrderByAscending(artifact => artifact.EstimatedValue)
+                                .Take(NoOfArtifactsToShowInList ).ToList();
     }
 }
