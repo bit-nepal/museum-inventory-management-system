@@ -32,22 +32,28 @@ public class AccountController : Controller
         return View(rootViewDirectory + "Password.cshtml");
     }
 
-  //  [Route("Update/{ArtifactId}")]
-  //// [HttpGet("{ArtifactId}")]
-  //public IActionResult Update(int artifactId)
-  //{
-  //      //var updateModel = new UpdateModel() { ArtifactId = artifactId };
-  //      //Console.WriteLine("Artifact id from controller Update : " + artifactId);
-  //      //return View($"{rootViewDirectory}Update.cshtml", updateModel);
-  //      return View($"{rootViewDirectory}Update.cshtml");
-  //  }
+    [Route("Username")]
+    public IActionResult Username()
+    {
+        return View(rootViewDirectory + "Username.cshtml");
+    }
 
-  //[HttpGet("{ArtifactId}")]
-  //public IActionResult GetTenantById(int artifactId)
-  //{
-  //  var detailModel = new DetailsModel() { ArtifactId = artifactId };
-  //  Console.WriteLine("Artifact id from controller Details: " + artifactId);
-  //  return View(rootViewDirectory + "Details.cshtml", detailModel);
-  //}
+    //  [Route("Update/{ArtifactId}")]
+    //// [HttpGet("{ArtifactId}")]
+    //public IActionResult Update(int artifactId)
+    //{
+    //      //var updateModel = new UpdateModel() { ArtifactId = artifactId };
+    //      //Console.WriteLine("Artifact id from controller Update : " + artifactId);
+    //      //return View($"{rootViewDirectory}Update.cshtml", updateModel);
+    //      return View($"{rootViewDirectory}Update.cshtml");
+    //  }
+
+    //[HttpGet("{ArtifactId}")]
+    //public IActionResult GetTenantById(int artifactId)
+    //{
+    //  var detailModel = new DetailsModel() { ArtifactId = artifactId };
+    //  Console.WriteLine("Artifact id from controller Details: " + artifactId);
+    //  return View(rootViewDirectory + "Details.cshtml", detailModel);
+    //}
 
 }
