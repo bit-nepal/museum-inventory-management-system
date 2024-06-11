@@ -29,19 +29,18 @@
 </div>
 
 <div class="d-flex m-3 justify-content-around">
-    <MostValuableArtifacts artifacts="RecentlyAddedArtifacts"/>
-    <RecentlyAddedArtifacts artifacts="MostValuableArtifacts"/>
+    <MostValuableArtifacts artifacts="MostValuableArtifacts"/>
+    <RecentlyAddedArtifacts artifacts="RecentlyAddedArtifacts"/>
 </div>
 
 @code{
+    private int NoOfArtifactsToShowInList = 4;
     private int TotalArtifacts { get; set; } 
     private int BoughtArtifacts { get; set;}
     private int RentedArtifacts { get; set;}
     private IEnumerable<mims.Models.Artifact> artifacts{ get; set; }
     private IEnumerable<mims.Models.Artifact> RecentlyAddedArtifacts{ get; set; }
     private IEnumerable<mims.Models.Artifact> MostValuableArtifacts{ get; set; }
-
-    int NoOfArtifactsToShowInList = 4;
 
     protected override async Task OnInitializedAsync()
     {
@@ -53,7 +52,7 @@
         RentedArtifacts  = artifacts.Where(a  =>  a.ModeOfAcquisition ==  AcquisitionMode.Rent).Count();
         RecentlyAddedArtifacts = artifacts.OrderByDescending(artifact => artifact.CreatedAt)
                                 .Take(NoOfArtifactsToShowInList ).ToList();
-        MostValuableArtifacts = artifacts.OrderByAscending(artifact => artifact.EstimatedValue)
+        MostValuableArtifacts = artifacts.OrderByDescending(artifact => artifact.EstimatedValue)
                                 .Take(NoOfArtifactsToShowInList ).ToList();
     }
 }
