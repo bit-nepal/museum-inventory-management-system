@@ -1,0 +1,81 @@
+@namespace  mims.Components.User
+@using mims.Models
+@using mims.Services.Interfaces
+@inject NavigationManager Navigation
+@inject IArtifactService ArtifactService
+
+<Alert Color="AlertColor.Light">
+    <div class="d-flex justify-content-between align-items-center">
+        <h4 class="alert-heading">
+            Artifacts List ( User )
+        </h4>
+    </div>
+</Alert>
+
+
+<Breadcrumb style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" Items="navItems" />
+
+<Grid TItem="Artifact"
+      Class="table table-hover table-bordered table-striped"
+      DataProvider="ArtifactsDataProvider"
+      AllowFiltering="true"
+      AllowPaging="true"
+      PageSize="10"
+      AllowSorting="true"
+      AllowSelection="false"
+      SelectionMode="GridSelectionMode.Multiple"
+      SelectedItemsChanged="OnSelectedItemsChanged"
+      PageSizeSelectorVisible="true"
+      PageSizeSelectorItems="@(new int[] { 5,10,20 })"
+      AllowRowClick="true"
+      OnRowClick="OnRowClick"
+      Responsive="true">
+
+    <GridColumn TItem="Artifact" HeaderText="Entry No." PropertyName="EntryNo" SortKeySelector="item => item.EntryNo">
+        @context.EntryNo
+    </GridColumn>
+    <GridColumn TItem="Artifact" HeaderText="Artifact Name" PropertyName="Name" SortKeySelector="item => item.Name">
+        @context.Name
+    </GridColumn>
+    <GridColumn TItem="Artifact" HeaderText="Location" PropertyName="Location" SortKeySelector="item => item.Location">
+        @context.Location
+    </GridColumn>
+    <GridColumn TItem="Artifact" HeaderText="Date of Acquisition" PropertyName="DateOfAcquisition" SortKeySelector="item => item.DateOfAcquisition">
+        @context.DateOfAcquisition
+    </GridColumn>
+</Grid>
+
+@code {
+    private IEnumerable<Artifact> artifacts = default!;
+    private HashSet<Artifact> selectedArtifacts = new();
+
+    private async Task<GridDataProviderResult<Artifact>> ArtifactsDataProvider(GridDataProviderRequest<Artifact> request)
+    {
+        if (artifacts is null) // pull artifacts only one time for client-side filtering, sorting, and paging
+            artifacts = await ArtifactService.GetAllArtifacts(); // call a service or an API to pull the artifacts
+        return await Task.FromResult(request.ApplyTo(artifacts));
+    }
+
+    private Task OnSelectedItemsChanged(HashSet<Artifact> artifacts)
+    {
+        selectedArtifacts = artifacts is not null && artifacts.Any() ? artifacts : new(); 
+        return Task.CompletedTask;
+    }
+
+    private async Task OnRowClick(GridRowEventArgs<Artifact> args)
+    {
+        @* args.Item.Id *@
+        Console.WriteLine("------------Row clicked " +  args.Item.Id);
+        var artifactId = args.Item.Id;
+        Navigation.NavigateTo($"Artifacts/{artifactId}",forceLoad:true);
+    }
+
+    private List<BreadcrumbItem>? navItems;
+    protected override void OnInitialized()
+    {
+        navItems = new List<BreadcrumbItem>
+        {
+            new BreadcrumbItem{ Text = "Artifacts", IsCurrentPage = true }
+        };
+    }
+}

@@ -2,18 +2,20 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using mims.Models;
+using mims.Views.Home;
 
 namespace mims.Controllers;
 
 public class HomeController : Controller
 {
   private readonly ILogger<HomeController> _logger;
-    public override void OnActionExecuting(ActionExecutingContext filterContext)
-    {
-        ViewBag.Layout = "~/Views/Shared/_Layout_Home.cshtml";
-        base.OnActionExecuting(filterContext);
-    }
-    public HomeController(ILogger<HomeController> logger)
+  private const string rootViewDirectory = "/Views/Home/";
+  public override void OnActionExecuting(ActionExecutingContext filterContext)
+  {
+    ViewBag.Layout = "~/Views/Shared/_Layout_Home.cshtml";
+    base.OnActionExecuting(filterContext);
+  }
+  public HomeController(ILogger<HomeController> logger)
   {
     _logger = logger;
   }
@@ -28,6 +30,13 @@ public class HomeController : Controller
     return View();
   }
 
+  [HttpGet("Artifacts/{ArtifactId}")]
+  public IActionResult GetTenantById(int artifactId)
+  {
+    var detailModel = new DetailsModel() { ArtifactId = artifactId };
+    Console.WriteLine("Artifact id from contreoller Details: " + artifactId);
+    return View(rootViewDirectory + "ArtifactDetails.cshtml", detailModel);
+  }
   [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
   public IActionResult Error()
   {
