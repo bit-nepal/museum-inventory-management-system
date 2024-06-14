@@ -1,6 +1,8 @@
 @namespace mims.Components.Admin.Artifact
 @using mims.Models
 @inject mims.Services.Interfaces.IArtifactService artifactService
+@inject NavigationManager Navigation
+@inject ToastService ToastService
 
 <Alert Color="AlertColor.Light">
     <div class="d-flex justify-content-between align-items-center">
@@ -31,7 +33,25 @@
     } 
     public async Task HandleValidSubmit()
     {
-        Console.WriteLine("Create Form Submitted");
-        artifactService.AddArtifact(artifact);
+        int affectedRows = await artifactService.AddArtifact(artifact);
+        Console.WriteLine("Create Form Submitted: " + affectedRows);
+        if(affectedRows > 0)
+        {
+          Navigation.NavigateTo("/Admin/Artifacts"  , true);
+          ToastService.Notify( new() {
+            IconName = IconName.Apple,
+            Title = "Success",
+            Message = "Successfully Created Artifact !!",
+            Type = ToastType.Success
+          });
+        }else
+        {
+          ToastService.Notify( new() {
+            IconName = IconName.Apple,
+            Title = "Failure",
+            Message = "Artifact Creation Failed !!",
+            Type = ToastType.Danger
+          });
+        }
     }
 }
