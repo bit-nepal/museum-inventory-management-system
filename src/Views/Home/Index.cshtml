@@ -1,11 +1,9 @@
-﻿@using mims.Components;
-@{
-    ViewData["Title"] = "Home Page";
+﻿@{
+    ViewData["Title"] =  "Artifacts";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome User</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-
 <a href="/Admin"> Admin Panel</a>
+<component type="typeof(mims.Components.User.ArtifactList)" render-mode="ServerPrerendered"/>
+
+
+
