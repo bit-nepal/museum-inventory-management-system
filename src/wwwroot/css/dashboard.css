@@ -69,7 +69,7 @@ body {
 	}
 
 	#sidebar.hide {
-		width: 60px;
+		width: 80px;
 	}
 
 	#sidebar .brand {
@@ -179,7 +179,8 @@ body {
 
 /* CONTENT */
 #content {
-	position: relative;
+	position: absolute;
+  top: 0px;
 	width: calc(100% - 280px);
 	left: 280px;
 	transition: .3s ease;
