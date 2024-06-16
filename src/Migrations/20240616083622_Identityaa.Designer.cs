@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mims.Data;
 
@@ -11,9 +12,11 @@ using mims.Data;
 namespace mims.Migrations
 {
     [DbContext(typeof(ArtifactContext))]
-    partial class ArtifactContextModelSnapshot : ModelSnapshot
+    [Migration("20240616083622_Identityaa")]
+    partial class Identityaa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,14 +49,6 @@ namespace mims.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "cb54431d-c748-4ee2-9460-4347cf0b8937",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -104,15 +99,6 @@ namespace mims.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserClaims", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ClaimType = "Role",
-                            ClaimValue = "Admin",
-                            UserId = "aed513ef-3530-4ee9-8ea6-5fa7d9c6c6f0"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -150,13 +136,6 @@ namespace mims.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "aed513ef-3530-4ee9-8ea6-5fa7d9c6c6f0",
-                            RoleId = "cb54431d-c748-4ee2-9460-4347cf0b8937"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -244,17 +223,17 @@ namespace mims.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "aed513ef-3530-4ee9-8ea6-5fa7d9c6c6f0",
+                            Id = "920158da-9e7b-4375-a16c-36e774ae6edc",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3f2efd5c-8c98-45f6-b690-fd5cbec5977e",
+                            ConcurrencyStamp = "414cb5b9-a153-4cd1-bef4-f589b5132af3",
                             Email = "admin@jyapusamaj.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@JYAPUSAMAJ.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDEpiCXpVde7MoeQzTCaSHnZDdm014xxPt38fFdbA3GzF0Z+XUrZTho1UG4rF7oiGQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGbPkcaUctJ+PdWoCznb9UogPtC/viegzkggDwmzEKsU1F6zT0gpiP1/+8Z3lodPqw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cd0b26fc-3488-4ec8-87e0-1dbe35bca343",
+                            SecurityStamp = "d88f870f-94f0-4400-8cde-0465ea8d82cf",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
