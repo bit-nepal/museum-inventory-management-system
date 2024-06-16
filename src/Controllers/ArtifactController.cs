@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using mims.Authorization.Constants;
 using mims.Views.Admin.Artifact;
 
 namespace mims.Controllers;
 
+[Authorize(Policy = ApplicationPolicy.Administrators)]
 [Route("Admin/Artifacts")]
 public class ArtifactController : Controller
 {
@@ -13,17 +16,21 @@ public class ArtifactController : Controller
     _logger = logger;
   }
 
+
+  [Authorize(Policy = ApplicationPolicy.Administrators)]
   public IActionResult Index()
   {
     return View(rootViewDirectory + "Index.cshtml");
   }
 
+  [Authorize(Policy = ApplicationPolicy.Administrators)]
   [Route("Create")]
   public IActionResult Create()
   {
     return View(rootViewDirectory + "Create.cshtml");
   }
 
+  [Authorize(Policy = ApplicationPolicy.Administrators)]
   [Route("Update/{ArtifactId}")]
   // [HttpGet("{ArtifactId}")]
   public IActionResult Update(int artifactId)
@@ -33,6 +40,7 @@ public class ArtifactController : Controller
     return View($"{rootViewDirectory}Update.cshtml", updateModel);
   }
 
+  [Authorize(Policy = ApplicationPolicy.Administrators)]
   [HttpGet("{ArtifactId}")]
   public IActionResult GetTenantById(int artifactId)
   {
