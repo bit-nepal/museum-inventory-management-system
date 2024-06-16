@@ -12,8 +12,8 @@ using mims.Data;
 namespace mims.Migrations
 {
     [DbContext(typeof(ArtifactContext))]
-    [Migration("20240608045358_DB")]
-    partial class DB
+    [Migration("20240616071505_Identity")]
+    partial class Identity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

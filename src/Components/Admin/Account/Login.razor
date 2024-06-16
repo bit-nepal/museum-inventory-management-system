@@ -1,34 +1,74 @@
 ﻿@namespace mims.Components.Admin.Account
-@rendermode InteractiveServer
+@inject mims.Services.Interfaces.ILoginService<mims.DTOs.ApplicationUserLoginDTO> LoginService
+@inject mims.Services.Interfaces.IRegisterService<mims.DTOs.ApplicationUserRegisterDTO> RegisterService
 
 <h3>Login</h3>
+<EditForm Model="@user" OnValidSubmit="HandleValidSubmit" class="form-inline">
+  <DataAnnotationsValidator />
+  <ValidationSummary />
+  <div class="row justify-content-around g-2 gx-3" >
+    <!-- -----first row------ -->        
+    <Card Class="rounded-4 bg-white border-0 col-12">
+      <CardBody>
+          <div class="col-12 col-md-6 order-md-first">
+            <div class="d-flex mb-1">
+              <label for="entryno" class="form-label mx-3"> Username : </label>&nbsp; &nbsp; 
+              <InputText id="entryno" class="form-control p-0 flex-grow-1" @bind-Value="user.UserName" />
+            </div>
 
-<Card Class="mx-auto border-0 form-control-color" Style="width:25rem;">
-    <CardBody>
-        <Card Class="text-center border-0">
-            <h1><i class="bi bi-person-circle"></i></h1>
-        </Card>
-
-        <CardTitle Class="text-center fw-bold">Admin Login</CardTitle>
-        <form>
-            <div class="form-group mt-4">
-                <label for="exampleInputEmail1">Username</label>
-                <input type="text" class="form-control form-control-lg" id="exampleInputname" aria-describedby="emailHelp" placeholder="Enter username">
-                
+            <div class="d-flex mb-1">
+              <label for="name" class="form-label mx-3">Password :</label>  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; 
+              <InputText id="name" class="form-control p-0 flex-grow-1" @bind-Value="user.Password" />
             </div>
-            <div class="form-group mt-4">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Enter password">
-            </div>
-            <div class="d-grid gap-2 col-6 mx-auto mt-4">
-                <Button Color="ButtonColor.Primary" > Login </Button>
-            </div>
-            
-        </form> 
-    </CardBody>
-</Card>
+          </div>
+      </CardBody>
+    </Card>
+  </div>
+  <button type="submit" id="submitButton" class="btn btn-primary my-2">Login</button>
+</EditForm>
 
 
 @code {
-
+  public mims.DTOs.ApplicationUserLoginDTO user{get;set;} = new();
+  
+  private async Task HandleValidSubmit()
+  {
+    Console.WriteLine("handling valid submit");
+    var result = await LoginService.SignInAsync(user);
+    if(result.Succeeded)
+    {
+      Console.WriteLine("Successful login");
+    }
+    else
+    {
+      Console.WriteLine("UnSuccessful login");
+    }
+  }
 }
+
+
+@* <Card Class="mx-auto border-0 form-control-color" Style="width:25rem;"> *@
+@*     <CardBody> *@
+@*         <Card Class="text-center border-0"> *@
+@*             <h1><i class="bi bi-person-circle"></i></h1> *@
+@*         </Card> *@
+@**@
+@*         <CardTitle Class="text-center fw-bold">Admin Login</CardTitle> *@
+@*         <form> *@
+@*             <div class="form-group mt-4"> *@
+@*                 <label for="exampleInputEmail1">Username</label> *@
+@*                 <input type="text" class="form-control form-control-lg" id="exampleInputname" aria-describedby="emailHelp" placeholder="Enter username"> *@
+@*                  *@
+@*             </div> *@
+@*             <div class="form-group mt-4"> *@
+@*                 <label for="exampleInputPassword1">Password</label> *@
+@*                 <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Enter password"> *@
+@*             </div> *@
+@*             <div class="d-grid gap-2 col-6 mx-auto mt-4"> *@
+@*                 <Button Color="ButtonColor.Primary" > Login </Button> *@
+@*             </div> *@
+@*         </form>  *@
+@*     </CardBody> *@
+@* </Card> *@
+
+
