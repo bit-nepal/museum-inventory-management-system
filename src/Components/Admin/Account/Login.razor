@@ -1,4 +1,4 @@
-﻿@namespace mims.Components.Admin.Account
+﻿@* @namespace mims.Components.Admin.Account
 @inject mims.Services.Interfaces.ILoginService<mims.DTOs.ApplicationUserLoginDTO> LoginService
 @inject mims.Services.Interfaces.IRegisterService<mims.DTOs.ApplicationUserRegisterDTO> RegisterService
 
@@ -14,7 +14,9 @@
             <div class="d-flex mb-1">
               <label for="entryno" class="form-label mx-3"> Username : </label>&nbsp; &nbsp; 
               <InputText id="entryno" class="form-control p-0 flex-grow-1" @bind-Value="user.UserName" />
-            </div>
+           </div>
+    </div>
+
 
 <Card Class="mx-auto border-0 rounded-4" Style="width:25rem;">
     <CardBody>
@@ -86,3 +88,4 @@
 @* </Card> *@
 
 
+ 
