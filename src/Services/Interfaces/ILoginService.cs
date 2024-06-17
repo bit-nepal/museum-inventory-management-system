@@ -3,4 +3,6 @@ public interface ILoginService<TLogin>
 {
   public Task<Microsoft.AspNetCore.Identity.SignInResult>
   SignInAsync(TLogin user);
+
+  public Task SignOutAsync();
 }
