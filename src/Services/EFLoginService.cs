@@ -37,4 +37,10 @@ public class EFLoginService : ILoginService<ApplicationUserLoginDTO>
     }
     return new SignInResult();
   }
+
+
+  public async Task SignOutAsync()
+  {
+    await _signInManager.SignOutAsync();
+  }
 }

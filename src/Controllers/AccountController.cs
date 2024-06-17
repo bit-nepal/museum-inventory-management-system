@@ -56,12 +56,12 @@ public class AccountController : Controller
     return View(rootViewDirectory + "Profile.cshtml");
   }
 
-    [Authorize(Policy = ApplicationPolicy.Administrators)]
-    [Route("Username")]
-    public IActionResult Username()
-    {
-        return View(rootViewDirectory + "Username.cshtml");
-    }
+  [Authorize(Policy = ApplicationPolicy.Administrators)]
+  [Route("Username")]
+  public IActionResult Username()
+  {
+    return View(rootViewDirectory + "Username.cshtml");
+  }
 
 
   [Authorize(Policy = ApplicationPolicy.Administrators)]
@@ -70,4 +70,14 @@ public class AccountController : Controller
   {
     return View(rootViewDirectory + "Password.cshtml");
   }
+
+  [AllowAnonymous]
+  [Route("Logout")]
+  public IActionResult Logout()
+  {
+    _loginService.SignOutAsync();
+    return View(rootViewDirectory + "Login.cshtml");
+  }
+
+
 }
