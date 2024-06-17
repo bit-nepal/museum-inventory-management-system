@@ -1,29 +1,97 @@
 ﻿@model mims.DTOs.ApplicationUserLoginDTO 
 @using mims.Components.Admin.Account;
 
-<!-- <component type="typeof(Login)" render-mode="Static" /> -->
+<style>
+    .login-container {
+        width: 100%;
+        max-width: 400px;
+        padding: 15px;
+        border-radius: 10px;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
 
+    .login-title {
+        margin-bottom: 20px;
+        text-align: center;
+    }
 
-<Card Class="mx-auto border-0 form-control-color" Style="width:25rem;">
+    .login-btn {
+        width: 100%;
+    }
+</style>
+
+<div class="card login-container mx-auto border-0 form-control-color" style="width:25rem;">
     <CardBody>
-        <Card Class="text-center border-0">
+        <div class="text-center border-0">
             <h1><i class="bi bi-person-circle"></i></h1>
-        </Card>
+        </div>
 
         <CardTitle Class="text-center fw-bold">Admin Login</CardTitle>
         <form asp-action="login" asp-controller="Account" method="post">
             <div class="form-group mt-4">
                 <label for="exampleInputEmail1">Username</label>
-                <input  asp-for="UserName" type="text" class="form-control form-control-lg" id="exampleInputname" aria-describedby="emailHelp" placeholder="Enter username">
+                <input  asp-for="UserName" type="text" class="form-control form-control-lg" id="exampleInputname" placeholder="Enter username">
                 
             </div>
             <div class="form-group mt-4">
                 <label for="exampleInputPassword1">Password</label>
                 <input asp-for="Password" type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Enter password">
+                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                    <i class="bi bi-eye" id="togglePasswordIcon"></i>
+                </button>
             </div>
             <div class="d-grid gap-2 col-6 mx-auto mt-4">
-                <Button Color="ButtonColor.Primary" > Login </Button>
+                <button type="submit" class="btn btn-primary login-btn">Login</button>
             </div>
         </form> 
     </CardBody>
-</Card>
+</div>
+
+@* <style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f5f5f5;
+    }
+
+    .login-container {
+        width: 100%;
+        max-width: 400px;
+        padding: 15px;
+        border-radius: 10px;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .login-title {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .login-btn {
+        width: 100%;
+    }
+</style>
+<body>
+    <div class="login-container">
+        <h2 class="login-title">Admin Login</h2>
+        <form asp-action="login" asp-controller="Account" method="post">
+            <div class="form-group m-4">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" placeholder="Enter username">
+            </div>
+            <div class="form-group m-4">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter password">
+            </div>
+            <div class="form-group m-4">
+                <button type="submit" class="btn btn-primary login-btn">Login</button>
+            </div>
+        </form>
+    </div>
+    
+</body> *@
