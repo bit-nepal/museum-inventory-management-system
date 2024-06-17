@@ -22,7 +22,7 @@ builder.Services.AddRazorComponents()
 // Custom Services
 builder.Services.AddScoped<IArtifactService, EntityFrameworkCoreArtifactService>();
 builder.Services.AddScoped<ILoginService<ApplicationUserLoginDTO>, EFLoginService>();
-builder.Services.AddScoped<IPasswordService, EFPasswordService>();
+builder.Services.AddScoped<IAccountService, EFAccountService>();
 builder.Services.AddScoped<IRegisterService<ApplicationUserRegisterDTO>, EFRegisterService>();
 builder.Services.AddScoped<MediaService>();
 

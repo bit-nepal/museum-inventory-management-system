@@ -6,9 +6,12 @@
 @using mims.Models
 @using mims.Services
 @using mims.DTOs
+@using Microsoft.AspNetCore.Identity
 
 @inject IConfiguration config
 @inject MediaService MediaService
+@inject IAccountService AccountService
+@inject NavigationManager Navigation
 
 <style>
     .profile-container {
@@ -68,5 +71,20 @@
         Console.WriteLine("handling valid submit");
         Console.WriteLine("Username: " + model.NewUserName);
         Console.WriteLine("Password:" + model.Password);
+
+      var result = await  AccountService.ChangeUsername(model);
+        if(result.Succeeded){
+          Console.WriteLine("Username Change Successful");
+          Navigation.NavigateTo($"Admin/Account/Logout",forceLoad:true);
+        }
+        else
+        {
+          Console.WriteLine("Username Change UnSuccessful");
+          foreach(IdentityError error in result.Errors)
+          {
+            Console.WriteLine(error.Description);
+          }
+        }
+
     }
 }
