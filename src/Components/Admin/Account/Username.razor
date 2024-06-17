@@ -1,6 +1,15 @@
 ﻿@namespace mims.Components.Admin.Account
 @rendermode InteractiveServer
 
+@using System.ComponentModel.DataAnnotations
+@using Services.Interfaces
+@using mims.Models
+@using mims.Services
+@using mims.DTOs
+
+@inject IConfiguration config
+@inject MediaService MediaService
+
 <style>
     .profile-container {
         max-width: 800px;
@@ -17,8 +26,10 @@
         <div style="text-center">
             <h2>Change Username</h2>
         </div>
-        <form>
-            <div class="form-group mt-4">
+        <EditForm Model="@model" class="form-inline" OnValidSubmit="@HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            @* <div class="form-group mt-4">
                 <label for="newPassword">Enter new username</label>
                 <input type="text" class="form-control form-control-lg" id="newusername" placeholder="Enter new username">
             </div>
@@ -26,16 +37,36 @@
                 <label for="password">Enter password</label>
                 <input type="password" class="form-control form-control-lg" id="oldpw" placeholder="Enter password">
 
+            </div> *@
+
+            <div class="d-flex mb-1">
+                <label for="entryno" class="form-label mx-3"> New Username </label>&nbsp; &nbsp;
+                <InputText id="entryno" class="form-check p-0 flex-grow-1" @bind-Value="model.NewUserName" />
+            </div>
+
+            <div class="d-flex mb-1">
+                <label for="entryno" class="form-label mx-3">Password </label>&nbsp; &nbsp;
+                <InputText id="entryno" class="form-check p-0 flex-grow-1" @bind-Value="model.Password" />
             </div>
             
             <div class="d-grid gap-2 col-6 mx-auto mt-4">
-                <Button Color="ButtonColor.Primary"> Change Username </Button>
+                <Button Type="ButtonType.Submit" Color="ButtonColor.Primary"> Change Username </Button>
             </div>
 
-        </form>
+        </EditForm>
+
+
+
     </CardBody>
 
 </Card>
 @code {
+    ApplicationUserChangeUsernameDTO model = new ();
 
+    private async Task HandleValidSubmit()
+    {
+        Console.WriteLine("handling valid submit");
+        Console.WriteLine("Username: " + model.NewUserName);
+        Console.WriteLine("Password:" + model.Password);
+    }
 }
