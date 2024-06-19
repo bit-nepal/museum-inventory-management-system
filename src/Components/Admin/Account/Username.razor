@@ -12,6 +12,8 @@
 @inject MediaService MediaService
 @inject IAccountService AccountService
 @inject NavigationManager Navigation
+@inject ToastService ToastService
+
 
 <style>
     .profile-container {
@@ -24,6 +26,7 @@
     }
 </style>
 
+<Offcanvas @ref="offcanvas"  Size="OffcanvasSize.Small" UseStaticBackdrop="true" style="width: 0px; height:0px;" />
 <Card Style="width:30rem;" Class="profile-container mx-auto">
     <CardBody>
         <div style="text-center">
@@ -64,15 +67,17 @@
 
 </Card>
 @code {
+    private Offcanvas offcanvas = default!;
     ApplicationUserChangeUsernameDTO model = new ();
 
     private async Task HandleValidSubmit()
     {
+        offcanvas.ShowAsync();
         Console.WriteLine("handling valid submit");
         Console.WriteLine("Username: " + model.NewUserName);
         Console.WriteLine("Password:" + model.Password);
 
-      var result = await  AccountService.ChangeUsername(model);
+        var result = await  AccountService.ChangeUsername(model);
         if(result.Succeeded){
           Console.WriteLine("Username Change Successful");
           Navigation.NavigateTo($"Admin/Account/Logout",forceLoad:true);
@@ -80,11 +85,20 @@
         else
         {
           Console.WriteLine("Username Change UnSuccessful");
+          string message = "";
           foreach(IdentityError error in result.Errors)
           {
+            message += $"{error.Description}";
             Console.WriteLine(error.Description);
           }
-        }
 
+          ToastService.Notify( new() {
+            IconName = IconName.Apple,
+            Title = "Cannot Change Username !!",
+            Message = message,
+            Type = ToastType.Danger
+          });
+        }
+        offcanvas.HideAsync();
     }
 }

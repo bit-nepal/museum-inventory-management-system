@@ -4,10 +4,12 @@
 @using mims.Services
 @using mims.Models
 
+@using Microsoft.AspNetCore.Identity;
 @inject IArtifactService ArtifactService
 @inject MediaService MediaService
+@inject ToastService ToastService
+<Offcanvas @ref="offcanvas"  Size="OffcanvasSize.Small" UseStaticBackdrop="true" style="width: 0px; height:0px;" />
 
-<Toasts class="p-3" Messages="messages" Placement="ToastsPlacement.TopRight" />
 <ConfirmDialog @ref="dialog" />
 
 <Alert Color="AlertColor.Light" >
@@ -170,6 +172,7 @@ else if( editingMode == false)
 }
 
 @code {
+    private Offcanvas offcanvas = default!;
   [Parameter]
   public int ArtifactId{ get; set; }
   private bool isLoading = true;
@@ -184,20 +187,8 @@ else if( editingMode == false)
         new BreadcrumbItem{ Text = "Details", IsCurrentPage = true }
   };
 
-  List<ToastMessage> messages = new List<ToastMessage>();
 
-  private void ShowMessage(ToastType toastType) => messages.Add(CreateToastMessage(toastType));
-
-  private ToastMessage CreateToastMessage(ToastType toastType)
-    => new ToastMessage
-    {
-      Type = toastType,
-      Title = "Blazor Bootstrap",
-      HelpText = $"{DateTime.Now}",
-      Message = $"Hello, world! This is a toast message. DateTime: {DateTime.Now}",
-    };
-
-    protected async override Task OnInitializedAsync()
+      protected async override Task OnInitializedAsync()
     {
       artifact = await ArtifactService.GetArtifact(ArtifactId);
       isLoading =  false;
@@ -217,11 +208,38 @@ else if( editingMode == false)
         StateHasChanged(); // Ensure the component re-renders
       }
     }
-    public async Task HandleValidSubmit() => await SaveChangesAsync();
-    private async Task SaveChangesAsync()
-    {
-      ShowMessage(ToastType.Success);
-      ArtifactService.UpdateArtifact(artifact);
+    public async Task HandleValidSubmit()     {
+      offcanvas.ShowAsync();
+
+      var result = await ArtifactService.UpdateArtifact(artifact);
+      if(result.Succeeded)
+        {
+          ToastService.Notify( new() {
+            IconName = IconName.Apple,
+            Title = "Artifact Update Success !!",
+            Message = "Specified Artifact has been Updated Successfully !!",
+            Type = ToastType.Success
+          });
+        }else
+        {
+          string message = "";
+          foreach(IdentityError error in result.Errors)
+          {
+            message += $"{error.Description}";
+            Console.WriteLine(error.Description);
+          }
+
+          ToastService.Notify( new() {
+            IconName = IconName.Apple,
+            Title = "Artifact Update Failed !!",
+            Message = message,
+            Type = ToastType.Danger
+          });
+        }
+
+      CancleEditing();
+      offcanvas.HideAsync();
+      editingMode=false;
     } 
 
     private async Task EditArtifact() {
@@ -229,6 +247,7 @@ else if( editingMode == false)
     }
 
     private async Task CancleEditing() {
+      Console.WriteLine("Cancling Editiing");
       artifact= await ArtifactService.GetArtifact(ArtifactId);
       editingMode = false;
     }
