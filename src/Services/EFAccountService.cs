@@ -23,21 +23,26 @@ public class EFAccountService : IAccountService
     var userId = _userManager.GetUserId(_httpContextAccessor.HttpContext!.User);
     var user = await _userManager.FindByIdAsync(userId!);
 
+    if (u.OldPassword is null || u.NewPassword is null)
+    {
+      return IdentityResult.Failed(new IdentityError { Description = "Password cannot be empty!" });
+    }
+    if (!u.NewPassword.Equals(u.ConfirmNewPassword))
+    {
+      return IdentityResult.Failed(new IdentityError { Description = "New Password And Confirmation Password doesnt match !" });
+    }
+
     if (user is null)
     {
-      return IdentityResult.Failed(new IdentityError { Description = "User not found." });
+      return IdentityResult.Failed(new IdentityError { Description = "User not found !" });
     }
 
     var passwordCheck = await _userManager.CheckPasswordAsync(user, u.OldPassword);
     if (!passwordCheck)
     {
-      return IdentityResult.Failed(new IdentityError { Description = "Incorrect old password." });
+      return IdentityResult.Failed(new IdentityError { Description = "Incorrect Password !" });
     }
 
-    if (!u.NewPassword.Equals(u.ConfirmNewPassword))
-    {
-      return IdentityResult.Failed(new IdentityError { Description = "New Password And Confirmation Password doesnt match" });
-    }
 
     return await _userManager.ChangePasswordAsync(user, u.OldPassword, u.NewPassword);
   }
@@ -49,11 +54,16 @@ public class EFAccountService : IAccountService
     var user = await _userManager.FindByIdAsync(userId!);
     if (user is null)
     {
-      return IdentityResult.Failed(new IdentityError { Description = "User Not Found !!" });
+      return IdentityResult.Failed(new IdentityError { Description = "User Not Found !" });
     }
+    if (u.Password is null)
+    {
+      return IdentityResult.Failed(new IdentityError { Description = "Password cannot be empty!" });
+    }
+
     if (await _userManager.CheckPasswordAsync(user, u.Password) == false)
     {
-      return IdentityResult.Failed(new IdentityError { Description = "Wrong Password !!" });
+      return IdentityResult.Failed(new IdentityError { Description = "Incorrect Password !" });
     }
 
     user.UserName = u.NewUserName;

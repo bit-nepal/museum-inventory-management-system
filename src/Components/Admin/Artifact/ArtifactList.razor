@@ -1,9 +1,12 @@
 @namespace mims.Components.Admin.Artifact
 @using mims.Models
-@using mims.Services.Interfaces
+
 @inject NavigationManager Navigation
-@inject IArtifactService ArtifactService
+@inject mims.Services.Interfaces.IArtifactService ArtifactService
 @inject ToastService ToastService
+@using static mims.Components.NotificationConfig
+
+<NotificationConfig  />
 
 <Alert Color="AlertColor.Light">
     <div class="d-flex justify-content-between align-items-center">
@@ -51,7 +54,6 @@
     </GridColumn>
 </Grid>
 
-<Button Color="ButtonColor.Primary" @onclick="() => ShowMessage(ToastType.Primary)">Primary Toast</Button>
 
 
 @* <div class="mt-3"> *@
@@ -118,4 +120,5 @@
             });
 
     }
+
 }

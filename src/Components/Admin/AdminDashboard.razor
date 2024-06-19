@@ -2,6 +2,7 @@
 @using mims.Components.Admin.Dashboard
 @using mims.Models
 @inject mims.Services.Interfaces.IArtifactService ArtifactService
+<Toasts class="p-3" AutoHide="true" Delay="4000" Placement="ToastsPlacement.TopRight" />
 
 <h1>Dashboard</h1>
 
@@ -9,7 +10,7 @@
     .my-card-container {
         transition: transform 0.3s;
     }
-
+`
     .my-card-container:hover {
           transform: scale(1.05);
           box-shadow: 0 8px 16px rgba(0,0,0,0.2);

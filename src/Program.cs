@@ -26,6 +26,7 @@ builder.Services.AddScoped<IAccountService, EFAccountService>();
 builder.Services.AddScoped<IRegisterService<ApplicationUserRegisterDTO>, EFRegisterService>();
 builder.Services.AddScoped<MediaService>();
 
+builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddBlazorBootstrap();
 
