@@ -37,19 +37,19 @@
 			<span class="text mx-4">Jyapu Samaj</span>
 		</a>
 		<ul class="side-menu top" class="h-10">
-			<li>
+			<li class='@((Context.Request.Path == "/Admin") ? "active" : "")'>
 				<a href="/Admin">
 					<i class='bx bxs-dashboard'></i>
 					<span class="text">Dashboard</span>
 				</a>
 			</li>
-			<li>
+			<li class='@(IsActive("/Admin/Artifacts") ? "active" : "")'>
 				<a href="/Admin/Artifacts">
 					<i class='bx bxs-shopping-bag-alt'></i>
 					<span class="text">Artifacts</span>
 				</a>
 			</li>
-			<li>
+			<li class='@(IsActive("/Admin/Account/") ? "active" : "")'>
 				<a href="Admin/Account/Profile">
 					<i class='bx bxs-doughnut-chart'></i>
 					<span class="text">Profile</span>
@@ -113,13 +113,6 @@ allSideMenu.forEach(item=> {
 document.addEventListener('DOMContentLoaded', function() {
     localStorage.getItem('sidebarState') =="hide" ?  sidebar.classList.add("hide") : sidebar.classList.remove("hide")  ;
     const activeLink = localStorage.getItem('activeLink');
-    if (activeLink) {
-        allSideMenu.forEach(item => {
-            if (item.href === activeLink) {
-                item.parentElement.classList.add('active');
-            }
-        });
-    }
 });
 
 
@@ -206,8 +199,10 @@ switchMode.addEventListener('change', function () {
 </body>
 </html>
 
-
-
-
-
-
+@functions {
+    public bool IsActive(string path)
+    {
+        var currentPath = Context.Request.Path.ToString().ToLower();
+        return currentPath.StartsWith(path.ToLower());
+    }
+}
