@@ -71,7 +71,7 @@ public class EFAccountService : IAccountService
 
     return await _userManager.UpdateAsync(user);
   }
-  public async Task<string> GetUserName()
+  public async Task<string> GetUsername()
   {
     var userId = _userManager.GetUserId(_httpContextAccessor.HttpContext!.User);
     var user = await _userManager.FindByIdAsync(userId!);
