@@ -22,7 +22,16 @@
         </Card>
         <CardTitle Class="text-center fw-bold"><h2>Admin Profile</h2></CardTitle>
         <div>
-            <h3 class="mb-0 text-primary">@userName</h3>
+            <h3 class="mb-0 text-primary">
+            @if (userName != null)
+            {
+              @userName
+            }
+             else
+            {
+                @:loading ...
+             }       
+          </h3>
             <p class="mb-1 text-muted">Administrator</p>
           
         </div>
@@ -71,7 +80,7 @@
     </div> *@
 
 @code {
-    private string userName {get;set;} = "loading ..";
+    private string userName {get;set;}
   protected async override Task OnInitializedAsync()
   {
     userName = await AccountService.GetUsername();
