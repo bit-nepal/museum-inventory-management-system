@@ -9,4 +9,6 @@ public interface IAccountService
   public Task<Microsoft.AspNetCore.Identity.IdentityResult>
   ChangeUsername(ApplicationUserChangeUsernameDTO user);
 
+  public Task<string>
+  GetUsername();
 }
