@@ -35,13 +35,13 @@ else if (artifact == null )
 }
 else if( editingMode == false)
 {
-  <div class="row justify-content-around g-2  mb-1" >
+  <div class="row justify-content-around gy-2  mb-1" >
     <!-- -----first row------ -->        
-    <Card Class="rounded-4 bg-white border-0 col-12">
+    <Card Class="rounded-4 bg-white border-0 col-12 " Id="card-1">
       <CardBody>
-        <div class="row">
+        <div class="row p-3" Id="card-1-1">
 
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-md-6 my-photo-frame">
                 <div class="card mx-auto" style="max-width: 80%; height:100%">
                     <div class="card-body p-0" style="width: 100%; height: 100%; overflow: hidden; position: relative;">
                         <img src="@Path.Combine(storagePath, artifact.PrimaryPhoto.ImageUrl)" 
@@ -50,7 +50,7 @@ else if( editingMode == false)
                 </div>
           </div>
 
-          <div class="col-12 col-md-6 order-md-first">
+          <div class="col-12 col-md-6 order-md-first row-box-2">
             <div class="d-flex m-1 border-bottom">
               <label for="entryno" class="form-label mx-3 font-weight-bold">Entry No: </label>&nbsp; &nbsp; 
               @artifact.EntryNo 
@@ -87,8 +87,8 @@ else if( editingMode == false)
     </Card>
 
     <!-- ------Second Row-------- -->
-    <Card Class="rounded-4 bg-white border-0 p-3 col-12 col-md-6">
-      <CardBody>
+    <Card Class="rounded-4 bg-white border-0 p-3 col-12 col-md-6 my-ui-card" Id="card-2">
+      <CardBody class="my-ui-body">
         <div class="d-flex m-1 border-bottom">
           <label for="dateOfAcquisition" class="form-label mx-3 font-weight-bold">Date Of Acquisition: </label>
           @artifact.DateOfAcquisition.ToString()
@@ -116,8 +116,8 @@ else if( editingMode == false)
       </CardBody>
     </Card>
 
-    <Card Class="rounded-4 bg-white border-0 p-3 col-12 col-md-6 ">
-      <CardBody>
+    <Card Class="rounded-4 bg-white border-0 p-3 col-12 col-md-6 my-ui-card" Id="card-3">
+      <CardBody class="my-ui-body">
         <div class="d-flex m-1 border-bottom">
           <label for="PhysicalCondition" class="form-label mx-3 font-weight-bold">Physical Condition: </label>&nbsp;
           @artifact.PhysicalCondition
@@ -151,8 +151,8 @@ else if( editingMode == false)
     </Card>
 
 
-    <Card Class="rounded-4 bg-white border-0 p-1 col-12">
-      <CardBody>
+    <Card Class="rounded-4 bg-white border-0 p-1 col-12 my-ui-card" Id="card-4">
+      <CardBody class="my-ui-body" >
         <div class="d-flex">
           <label for="Remarks" class="form-label mx-3 font-weight-bold">Remarks: </label>
           @artifact.Remarks
