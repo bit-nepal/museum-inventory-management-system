@@ -6,6 +6,7 @@
 		:root {
 			--scheme-primary-color: #338cea;
 		}
+    
 	</style>
 
 	<meta charset="UTF-8">
@@ -113,6 +114,14 @@ allSideMenu.forEach(item=> {
 document.addEventListener('DOMContentLoaded', function() {
     localStorage.getItem('sidebarState') =="hide" ?  sidebar.classList.add("hide") : sidebar.classList.remove("hide")  ;
     const activeLink = localStorage.getItem('activeLink');
+		const allUiCards = document.querySelectorAll('.my-ui-card');
+    window.onbeforeprint = function () {
+        sidebar.classList.add('hide');
+        allUiCards.forEach(i=> {
+          console.log("Removing p-3");
+			    i.classList.remove('p-3');
+		    })
+    }
 });
 
 

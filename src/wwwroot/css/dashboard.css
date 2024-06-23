@@ -601,9 +601,13 @@ body {
 		left: 200px;
 	}
 
-		#content #navigation .nav-link {
-			display: none;
-		}
+  #content #navigation .nav-link {
+    display: none !important;
+  }
+  .my-photo-frame{
+    min-height: 200px !important;
+  }
+
 }
 
 
@@ -657,4 +661,43 @@ body {
 	#content main .table-data .todo .todo-list {
 		min-width: 420px;
 	}
+}
+
+@media print {
+  #sidebar{
+    width:80px !important;
+    display: none !important;
+  }
+  #navigation{
+    display:none !important;
+  }
+  .breadcrumb{
+    display:none !important;
+  }
+  .btn{
+    display: none !important;
+  } 
+  .alert{
+    display: none !important;
+  }
+  main{
+    overflow: hidden !important;
+  } 
+  .my-photo-frame{
+    min-height: 200px !important;
+    margin-bottom: 5px !important;
+  }
+  .card , .card-body , .my-ui-card{
+    margin: 0px !important;
+    padding: 0px !important;
+  }
+  .my-ui-body{
+    padding-left:0px !important;
+  }
+  .my-ui-card{
+  padding-left: 0px !important;
+}
+  #card-1 ,#card-1-1 , #card-2 , #card-3 , #card-4{
+    padding: 0px !important;
+  }
 }
