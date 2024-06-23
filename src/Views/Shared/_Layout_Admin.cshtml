@@ -32,9 +32,9 @@
 <component type="typeof(mims.Components.NotificationConfig)" render-mode="ServerPrerendered" />
 	<!-- SIDEBAR -->
 	<section id="sidebar" class="hide">
-		<a href="#" class="brand">
+		<a href="#" class="brand" style="background-color: var(--scheme-primary-color)">
 			<i class='bx'> </i>
-			<span class="text mx-4">Jyapu Samaj</span>
+			<span class="text mx-4" style="color: white">Jyapu Samaj</span>
 		</a>
 		<ul class="side-menu top" class="h-10">
 			<li class='@((Context.Request.Path == "/Admin") ? "active" : "")'>
@@ -70,7 +70,7 @@
 	<!-- CONTENT -->
 	<section id="content">
 		<!-- NAVBAR -->
-		<nav id="navigation">
+		<nav id="navigation" style="background-color: lightblue">
 			<i class='bx bx-menu'></i>
 			<a href="/Admin" class="nav-link">Home</a>
 			<a href="/Home/Privacy" class="nav-link">Privacy</a>

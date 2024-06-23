@@ -18,21 +18,23 @@
 </style>
 
 <div class="d-flex m-3 justify-content-around">
-    <div>
+    <div class="my-card-container">
         <TotalArtifacts TotalNoOfArtifacts="TotalArtifacts"/>
     </div>
-    <div>
+    <div class="my-card-container">
         <BoughtArtifacts NoOfBoughtArtifacts="BoughtArtifacts"/>
     </div>
-    <div>
-        <RentedArtifacts NoOfRentedArtifacts="RentedArtifacts"/>
+    <div class="my-card-container">
+        <RentedArtifacts NoOfRentedArtifacts="RentedArtifacts" />
     </div>
 </div>
 
-<div class="d-flex m-3 justify-content-around">
-    <MostValuableArtifacts artifacts="MostValuableArtifacts"/>
-    <RecentlyAddedArtifacts artifacts="RecentlyAddedArtifacts"/>
+<div class="d-flex m-3 justify-content-around my-card-container">
+    <MostValuableArtifacts artifacts="MostValuableArtifacts" />
+    <RecentlyAddedArtifacts artifacts="RecentlyAddedArtifacts" />
 </div>
+
+
 
 @code{
     private int NoOfArtifactsToShowInList = 4;
