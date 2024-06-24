@@ -34,7 +34,7 @@
 <component type="typeof(mims.Components.NotificationConfig)" render-mode="ServerPrerendered" />
 	<!-- SIDEBAR -->
 	<section id="sidebar" class="hide">
-		<a href="#" class="brand" style="background-color: var(--scheme-secondary-color)">
+		<a href="#" class="brand rounded-3" style="background-color: var(--scheme-secondary-color)">
 			<i class='bx'> </i>
 			<span class="text mx-4" style="color: white">Jyapu Samaj</span>
 		</a>
@@ -207,6 +207,12 @@ switchMode.addEventListener('change', function () {
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>
+<footer class="border-top footer text-muted" style="background-color:dodgerblue">
+	<div class="container text-center text-white">
+		Preserving the Past, Managing the Present, For the Future - &copy; 2024 - Developed by - <a class="text-warning" href="https://www.hubizen.com">Hubizen Innovations</a>  - <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+	</div>
+</footer>
+
 </html>
 
 @functions {
