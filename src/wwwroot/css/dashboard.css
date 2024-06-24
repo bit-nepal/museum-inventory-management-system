@@ -108,7 +108,7 @@ body {
 		}
 
 			#sidebar .side-menu li.active {
-				background: var(--grey);
+				background: #fff0f0;
 				position: relative;
 			}
 
@@ -139,7 +139,7 @@ body {
 			#sidebar .side-menu li a {
 				width: 100%;
 				height: 100%;
-				background: var(--light);
+				background: var(--scheme-secondary-color);
 				display: flex;
 				align-items: center;
 				border-radius: 48px;
@@ -150,7 +150,7 @@ body {
 			}
 
 		#sidebar .side-menu.top li.active a {
-			color: var(--blue);
+			color: blue;
 		}
 
 	#sidebar.hide .side-menu li a {
@@ -161,9 +161,11 @@ body {
 	#sidebar .side-menu li a.logout {
 		color: var(--red);
 	}
-
+	#sidebar .side-menu li a.logout:hover {
+		color:red;
+	}
 	#sidebar .side-menu.top li a:hover {
-		color: var(--blue);
+		color: blue;
 	}
 
 	#sidebar .side-menu li a .bx {
