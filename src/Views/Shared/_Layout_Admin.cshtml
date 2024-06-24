@@ -4,7 +4,8 @@
 <head>
 	<style>
 		:root {
-			--scheme-primary-color: #338cea;
+			--scheme-primary-color: lightblue;
+			--scheme-secondary-color: #5eaec8;
 		}
     
 	</style>
@@ -29,11 +30,11 @@
 	<title>AdminHub</title>
 
 </head>
-<body style="background-color: #eeeeee;">
+<body style="background-color: #fff0f0;">
 <component type="typeof(mims.Components.NotificationConfig)" render-mode="ServerPrerendered" />
 	<!-- SIDEBAR -->
 	<section id="sidebar" class="hide">
-		<a href="#" class="brand" style="background-color: var(--scheme-primary-color)">
+		<a href="#" class="brand" style="background-color: var(--scheme-secondary-color)">
 			<i class='bx'> </i>
 			<span class="text mx-4" style="color: white">Jyapu Samaj</span>
 		</a>
@@ -71,7 +72,7 @@
 	<!-- CONTENT -->
 	<section id="content">
 		<!-- NAVBAR -->
-		<nav id="navigation" style="background-color: lightblue">
+		<nav id="navigation">
 			<i class='bx bx-menu'></i>
 			<a href="/Admin" class="nav-link">Home</a>
 			<a href="/Home/Privacy" class="nav-link">Privacy</a>
