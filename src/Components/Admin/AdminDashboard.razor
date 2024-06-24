@@ -7,31 +7,28 @@
 <h1>Dashboard</h1>
 
 <style>
-    .my-special-card-container {
-        transition: transform 0.3s;
-    }
-`
-    .my-special-card-container:hover {
-          transform: scale(1.05);
-          box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    .my-special-card-container{
+        box-shadow: 0px 0px 35px -3px rgba(142,125,125,0.75);
+        -webkit-box-shadow: 0px 0px 35px -3px rgba(142,125,125,0.75);
+        -moz-box-shadow: 0px 0px 35px -3px rgba(142,125,125,0.75);
     }
 </style>
 
-<div class="d-flex m-3 justify-content-around">
-    <div  class="my-special-card-container">
+<div class="d-flex m-3 justify-content-between">
+    <div id="dashboard-component-1" >
         <TotalArtifacts TotalNoOfArtifacts="TotalArtifacts"/>
     </div>
-    <div class="my-card-container">
+    <div id="dashboard-component-2">
         <BoughtArtifacts NoOfBoughtArtifacts="BoughtArtifacts"/>
     </div>
-    <div class="my-card-container">
+    <div id="dashboard-component-3">
         <RentedArtifacts NoOfRentedArtifacts="RentedArtifacts" />
     </div>
 </div>
 
-<div class="d-flex m-3 justify-content-around my-card-container">
-    <MostValuableArtifacts artifacts="MostValuableArtifacts" />
-    <RecentlyAddedArtifacts artifacts="RecentlyAddedArtifacts" />
+<div  class="d-flex m-3 justify-content-between my-card-container">
+    <MostValuableArtifacts artifacts="MostValuableArtifacts"/>
+    <RecentlyAddedArtifacts artifacts="RecentlyAddedArtifacts"/>
 </div>
 
 
