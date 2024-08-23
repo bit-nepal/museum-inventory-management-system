@@ -204,8 +204,14 @@
     Console.WriteLine("handling valid submit");
     if (file != null)
     {
-        Console.WriteLine("file not null");    
+        Console.WriteLine("file not null"); 
+        if(MediaService is null)
+        {
+          Console.WriteLine("Media Service is null");
+        }
+          Console.WriteLine("Capturing File");
         string imageName = await MediaService.CaptureFile(file, maxFileSize);
+          Console.WriteLine("File is Captured");
         Console.WriteLine("Image new name :  " + imageName);
         if (!string.IsNullOrEmpty(imageName))
         {

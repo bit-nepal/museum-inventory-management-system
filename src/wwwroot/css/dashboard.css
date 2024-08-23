@@ -167,6 +167,14 @@ body {
 	#sidebar .side-menu.top li a:hover {
 		color: blue;
 	}
+  
+  #sidebar .hubizen-logo li{
+    position:absolute;
+    bottom:0px;
+  }
+	#sidebar.hide .hubizen-logo li a{
+		display:none;			
+  }
 
 	#sidebar .side-menu li a .bx {
 		min-width: calc(60px - ((4px + 6px) * 2));
