@@ -6,6 +6,7 @@
 # dotenv files
 .env
 
+.legel/
 # User-specific files
 *.rsuser
 *.suo
@@ -484,3 +485,4 @@ $RECYCLE.BIN/
 *.swp
 
 storage/
+seed/*.sql

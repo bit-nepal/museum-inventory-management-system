@@ -9,7 +9,7 @@
 
 <Alert Color="AlertColor.Light" >
   <div class="d-flex justify-content-between h-10" >
-    <h2> Artifact Details (user) !!</h2>  
+    <h2> Artifact Details</h2>  
     <div class="mh-5">
       @if(!isLoading && artifact!=null){
         @* <img src="@Path.Combine(storagePath,artifact.PrimaryPhoto.ImageUrl)" Class="img-fluid" > *@
@@ -29,7 +29,7 @@ else if (artifact == null )
   <li class="list-group-item">No artifact found!!</li>
 }
 else {
-  <div class="row justify-content-around g-2  mb-1" >
+  <div class="row justify-content-around g-2  mb-1" style="overflow:hidden" >
     <!-- -----first row------ -->        
     <Card Class="rounded-4 bg-white border-0 col-12">
       <CardBody>

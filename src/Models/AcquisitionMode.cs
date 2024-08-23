@@ -45,14 +45,14 @@ namespace mims.Models;
 // }
 public enum AcquisitionMode
 {
-  Buying,
-  Built,
-  Credit,
-  Exchange,
-  Rent,
-  Replica,
-  Gift,
-  Donation,
-  [Display(Name = "Legal Security")] LegalSecurity,
-  Others
+  Buying = 0,
+  Built = 1,
+  Credit = 2,
+  Exchange = 3,
+  Rent = 4,
+  Replica = 5,
+  Gift = 6,
+  Donation = 7,
+  [Display(Name = "Legal Security")] LegalSecurity = 8,
+  Others = 9
 }

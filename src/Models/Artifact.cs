@@ -57,7 +57,7 @@ public class Artifact
   public string? NameOfArtist { get; set; }
 
   [Column("estimated_value")]
-  public int? EstimatedValue { get; set; }
+  public int? EstimatedValue { get; set; } = 0;
 
   [Column("remarks")]
   public string? Remarks { get; set; }
@@ -73,7 +73,7 @@ public class Artifact
 
   [Column("mode_of_acquisition")]
   [AcquisitionModeValidation]
-  public AcquisitionMode ModeOfAcquisition { get; set; }
+  public AcquisitionMode ModeOfAcquisition { get; set; } = AcquisitionMode.Donation;
 
   [Column("primary_photo")]
   public Image? PrimaryPhoto { get; set; }

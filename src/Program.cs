@@ -55,8 +55,22 @@ builder.Services
 // Database configuration
 var ArtifactConnectionString = builder.Configuration.GetConnectionString("ArtifactConnectionString");
 builder.Services.AddDbContextFactory<ArtifactContext>(
-  options =>
-       options.UseMySql(ArtifactConnectionString, ServerVersion.AutoDetect(ArtifactConnectionString)));
+      options =>
+      {
+        options.UseMySql(
+            ArtifactConnectionString,
+            ServerVersion.AutoDetect(ArtifactConnectionString),
+            mySqlOptions =>
+            {
+              mySqlOptions.EnableRetryOnFailure(
+                  maxRetryCount: 20,
+                  maxRetryDelay: TimeSpan.FromSeconds(10),
+                  errorNumbersToAdd: null
+              );
+            }
+          );
+      }
+    );
 
 // Build the app
 var app = builder.Build();
