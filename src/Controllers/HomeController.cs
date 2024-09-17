@@ -29,7 +29,10 @@ public class HomeController : Controller
   {
     return View();
   }
-
+  public IActionResult VirtualTour()
+  {
+    return View();
+  }
   [HttpGet("Artifacts/{ArtifactId}")]
   public IActionResult GetTenantById(int artifactId)
   {
