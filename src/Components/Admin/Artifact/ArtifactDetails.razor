@@ -8,179 +8,184 @@
 @inject IArtifactService ArtifactService
 @inject MediaService MediaService
 @inject ToastService ToastService
+@inject IJSRuntime JSRuntime
+@inject NavigationManager navigationManager;
+
 <Offcanvas @ref="offcanvas"  Size="OffcanvasSize.Small" UseStaticBackdrop="true" style="width: 0px; height:0px;" />
 
 <ConfirmDialog @ref="dialog" />
 
 <Alert Color="AlertColor.Light" >
-  <div class="d-flex justify-content-between h-10" >
-    <h2> Artifact Details </h2>  
-    <div class="mh-5">
-      @if(!isLoading && artifact!=null){
-        @* <img src="@Path.Combine(storagePath,artifact.PrimaryPhoto.ImageUrl)" Class="img-fluid" > *@
-      }
+    <div class="d-flex justify-content-between h-10" >
+        <h2> Artifact Details </h2>   <Button Color="ButtonColor.Success" Style="margin-left: 50rem;" @onclick="OpenPrintDialog">Print</Button>
+        <div class="mh-5">
+            @if(!isLoading && artifact!=null){
+                @* <img src="@Path.Combine(storagePath,artifact.PrimaryPhoto.ImageUrl)" Class="img-fluid" > *@
+            }
+        </div>
     </div>
-  </div>
 </Alert>
 
 <Breadcrumb style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" Items="navItems" />
 
 @if (isLoading)
 {
-  <li class="list-group-item">Loading...</li>
+    <li class="list-group-item">Loading...</li>
 }
 else if (artifact == null )
 {
-  <li class="list-group-item">No artifact found!!</li>
+    <li class="list-group-item">No artifact found!!</li>
 }
 else if( editingMode == false)
 {
-  <div class="row justify-content-around gy-2  mb-1" >
-    <!-- -----first row------ -->        
-    <Card Class="rounded-4 bg-white border-0 col-12 " Id="card-1">
-      <CardBody>
-        <div class="row p-3" Id="card-1-1">
+    <div class="row justify-content-around gy-2  mb-1" >
+        <!-- -----first row------ -->        
+        <Card Class="rounded-4 bg-white border-0 col-12 " Id="card-1">
+            <CardBody>
+                <div class="row p-3" Id="card-1-1">
 
-          <div class="col-12 col-md-6 my-photo-frame">
-                <div class="card mx-auto" style="max-width: 80%; height:100%">
-                    <div class="card-body p-0" style="width: 100%; height: 100%; overflow: hidden; position: relative;">
-                        <img src="@Path.Combine(storagePath, artifact.PrimaryPhoto.ImageUrl)" 
-                          class="img-fluid rounded mx-auto d-block" style="position: absolute; top: 50%; left: 50%; width: auto; height: auto; min-width: 100%; min-height: 100%; transform: translate(-50%, -50%); object-fit: cover;" />
+                    <div class="col-12 col-md-6 my-photo-frame">
+                        <div class="card mx-auto" style="max-width: 80%; height:100%">
+                            <div class="card-body p-0" style="width: 100%; height: 100%; overflow: hidden; position: relative;">
+                                <img src="@Path.Combine(storagePath, artifact.PrimaryPhoto.ImageUrl)" 
+                                class="img-fluid rounded mx-auto d-block" style="position: absolute; top: 50%; left: 50%; width: auto; height: auto; min-width: 100%; min-height: 100%; transform: translate(-50%, -50%); object-fit: cover;" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 order-md-first row-box-2">
+                        <div class="d-flex m-1 border-bottom">
+                            <label for="entryno" class="form-label mx-3 font-weight-bold">Entry No: </label>&nbsp; &nbsp; 
+                            @artifact.EntryNo 
+                        </div>
+
+                        <div class="d-flex m-1 border-bottom">
+                            <label for="name" class="form-label mx-3 font-weight-bold">Name: </label>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; 
+                            @artifact.Name
+                        </div>
+                        <div class="d-flex m-1 border-bottom">
+                            <label for="description" class="form-label mx-3 font-weight-bold">Description: </label>&nbsp;
+                            @artifact.Description
+                        </div>
+                        <div class="d-flex m-1 border-bottom">
+                            <label for="timePeriod" class="form-label mx-3 font-weight-bold">Time/Period: </label>
+                            @artifact.TimePeriod
+                        </div>
+                        @* ********* Inscription ******** *@
+                        <div class="d-flex m-1 border-bottom">
+                            <label for="hasInscription" class="form-label mx-3 font-weight-bold">Inscription: </label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            @artifact.Inscription
+                        </div>
+                        <div class="d-flex m-1 border-bottom">
+                            <label for="Location" class="form-label mx-3 font-weight-bold">Location: </label>&nbsp; &nbsp; &nbsp; &nbsp; 
+                            @artifact.Location
+                        </div>  
+                        <div class="d-flex m-1">
+                            <label for="PhotoNo" class="form-label mx-3 font-weight-bold">Photo No.: </label>
+                            @artifact.PrimaryPhoto.ImageNo
+                        </div>
                     </div>
                 </div>
-          </div>
+            </CardBody>
+        </Card>
 
-          <div class="col-12 col-md-6 order-md-first row-box-2">
-            <div class="d-flex m-1 border-bottom">
-              <label for="entryno" class="form-label mx-3 font-weight-bold">Entry No: </label>&nbsp; &nbsp; 
-              @artifact.EntryNo 
-            </div>
+        <!-- ------Second Row-------- -->
+        <Card Class="rounded-4 bg-white border-0 p-3 col-12 col-md-6 my-ui-card" Id="card-2">
+            <CardBody class="my-ui-body">
+                <div class="d-flex m-1 border-bottom">
+                    <label for="dateOfAcquisition" class="form-label mx-3 font-weight-bold">Date Of Acquisition: </label>
+                    @artifact.DateOfAcquisition.ToString()
+                </div>
 
-            <div class="d-flex m-1 border-bottom">
-              <label for="name" class="form-label mx-3 font-weight-bold">Name: </label>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; 
-              @artifact.Name
-            </div>
-            <div class="d-flex m-1 border-bottom">
-              <label for="description" class="form-label mx-3 font-weight-bold">Description: </label>&nbsp;
-              @artifact.Description
-            </div>
-            <div class="d-flex m-1 border-bottom">
-              <label for="timePeriod" class="form-label mx-3 font-weight-bold">Time/Period: </label>
-              @artifact.TimePeriod
-            </div>
-            @* ********* Inscription ******** *@
-            <div class="d-flex m-1 border-bottom">
-              <label for="hasInscription" class="form-label mx-3 font-weight-bold">Inscription: </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                @artifact.Inscription
-            </div>
-            <div class="d-flex m-1 border-bottom">
-              <label for="Location" class="form-label mx-3 font-weight-bold">Location: </label>&nbsp; &nbsp; &nbsp; &nbsp; 
-              @artifact.Location
-            </div>  
-            <div class="d-flex m-1">
-              <label for="PhotoNo" class="form-label mx-3 font-weight-bold">Photo No.: </label>
-              @artifact.PrimaryPhoto.ImageNo
-            </div>
-          </div>
-        </div>
-      </CardBody>
-    </Card>
+                <div class="d-flex m-1 border-bottom">
+                    <label class="form-label mx-3 font-weight-bold">Mode of Acquisition: </label>
+                    @artifact.ModeOfAcquisition                         
+                </div>
 
-    <!-- ------Second Row-------- -->
-    <Card Class="rounded-4 bg-white border-0 p-3 col-12 col-md-6 my-ui-card" Id="card-2">
-      <CardBody class="my-ui-body">
-        <div class="d-flex m-1 border-bottom">
-          <label for="dateOfAcquisition" class="form-label mx-3 font-weight-bold">Date Of Acquisition: </label>
-          @artifact.DateOfAcquisition.ToString()
-        </div>
+                <div class="d-flex m-1 border-bottom">
+                    <label for="placeOfOrigin" class="form-label mx-3 font-weight-bold">Place Of Origin : </label>
+                    @artifact.PlaceOfOrigin 
+                </div>  
 
-        <div class="d-flex m-1 border-bottom">
-          <label class="form-label mx-3 font-weight-bold">Mode of Acquisition: </label>
-          @artifact.ModeOfAcquisition                         
-        </div>
+                <div class="d-flex m-1 border-bottom">
+                    <label for="PlaceOfReceipt" class="form-label mx-3 font-weight-bold">Place Of Receipt: </label>
+                    @artifact.PlaceOfReceipt
+                </div>  
 
-        <div class="d-flex m-1 border-bottom">
-          <label for="placeOfOrigin" class="form-label mx-3 font-weight-bold">Place Of Origin : </label>
-          @artifact.PlaceOfOrigin 
-        </div>  
+                <div class="d-flex m-1">
+                    <label for="NameOfDonor" class="form-label mx-3 font-weight-bold">Name Of Donor: </label>&nbsp; 
+                    @artifact.NameOfDonor 
+                </div>  
+            </CardBody>
+        </Card>
 
-        <div class="d-flex m-1 border-bottom">
-          <label for="PlaceOfReceipt" class="form-label mx-3 font-weight-bold">Place Of Receipt: </label>
-          @artifact.PlaceOfReceipt
-        </div>  
+        <Card Class="rounded-4 bg-white border-0 p-3 col-12 col-md-6 my-ui-card" Id="card-3">
+            <CardBody class="my-ui-body">
+                <div class="d-flex m-1 border-bottom">
+                    <label for="PhysicalCondition" class="form-label mx-3 font-weight-bold">Physical Condition: </label>&nbsp;
+                    @artifact.PhysicalCondition
+                </div>  
 
-        <div class="d-flex m-1">
-          <label for="NameOfDonor" class="form-label mx-3 font-weight-bold">Name Of Donor: </label>&nbsp; 
-          @artifact.NameOfDonor 
-        </div>  
-      </CardBody>
-    </Card>
+                <div class="d-flex m-1 border-bottom">
+                    <label for="NumberOfObjects" class="form-label mx-3 font-weight-bold">Number Of Objects: </label>
+                    @artifact.Number
+                </div>  
 
-    <Card Class="rounded-4 bg-white border-0 p-3 col-12 col-md-6 my-ui-card" Id="card-3">
-      <CardBody class="my-ui-body">
-        <div class="d-flex m-1 border-bottom">
-          <label for="PhysicalCondition" class="form-label mx-3 font-weight-bold">Physical Condition: </label>&nbsp;
-          @artifact.PhysicalCondition
-        </div>  
+                <div class="d-flex m-1 border-bottom">
+                    <label for="NameOfArtist" class="form-label mx-3 font-weight-bold">Name of Artist: </label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                    @artifact.NameOfArtist
+                </div>  
 
-        <div class="d-flex m-1 border-bottom">
-          <label for="NumberOfObjects" class="form-label mx-3 font-weight-bold">Number Of Objects: </label>
-          @artifact.Number
-        </div>  
+                <div class="d-flex m-1 border-bottom">
+                    <label for="EstimatedValue" class="form-label mx-3 font-weight-bold">Estimated Value: </label> &nbsp; &nbsp; &nbsp; &nbsp;
+                    @artifact.EstimatedValue
+                </div>
 
-        <div class="d-flex m-1 border-bottom">
-          <label for="NameOfArtist" class="form-label mx-3 font-weight-bold">Name of Artist: </label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-          @artifact.NameOfArtist
-        </div>  
+                <div class="d-flex m-1 border-bottom">
+                    <label for="Size" class="form-label mx-3 font-weight-bold">Size: </label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                    @artifact.Measurement
+                </div>
 
-        <div class="d-flex m-1 border-bottom">
-          <label for="EstimatedValue" class="form-label mx-3 font-weight-bold">Estimated Value: </label> &nbsp; &nbsp; &nbsp; &nbsp;
-          @artifact.EstimatedValue
-        </div>
-
-        <div class="d-flex m-1 border-bottom">
-          <label for="Size" class="form-label mx-3 font-weight-bold">Size: </label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-          @artifact.Measurement
-        </div>
-
-        <div class="d-flex m-1">
-          <label for="Weight" class="form-label mx-3 font-weight-bold">Weight</label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-          @artifact.Weight
-        </div>
-      </CardBody>
-    </Card>
+                <div class="d-flex m-1">
+                    <label for="Weight" class="form-label mx-3 font-weight-bold">Weight</label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                    @artifact.Weight
+                </div>
+            </CardBody>
+        </Card>
 
 
-    <Card Class="rounded-4 bg-white border-0 p-1 col-12 my-ui-card" Id="card-4">
-      <CardBody class="my-ui-body" >
-        <div class="d-flex">
-          <label for="Remarks" class="form-label mx-3 font-weight-bold">Remarks: </label>
-          @artifact.Remarks
-        </div>
-      </CardBody>
-    </Card>
-  </div>
+        <Card Class="rounded-4 bg-white border-0 p-1 col-12 my-ui-card" Id="card-4">
+            <CardBody class="my-ui-body" >
+                <div class="d-flex">
+                    <label for="Remarks" class="form-label mx-3 font-weight-bold">Remarks: </label>
+                    @artifact.Remarks
+                </div>
+            </CardBody>
+        </Card>
+    </div>
 
-  <Button Color="ButtonColor.Primary" @onclick="EditArtifact" class="m-2">Edit</Button>
-  <Button Color="ButtonColor.Danger" @onclick="ShowDeleteConfirmationAsync" class="m-2"> Delete Artifact</Button>
+    <Button Color="ButtonColor.Primary" @onclick="EditArtifact" class="m-2">Edit</Button>
+    <Button Color="ButtonColor.Danger" @onclick="ShowDeleteConfirmationAsync" class="m-2"> Delete Artifact</Button>
+    <Button Color="ButtonColor.Secondary" @onclick="NavigateToNextPage" class="m-2"> Next </Button>
+
 
 }
 @if(!isLoading && artifact is not null && editingMode)
 {
-  <ArtifactDetailForm OnValidSubmitHandler="HandleValidSubmit" ButtonText="Save Changes" bindingArtifactObject="artifact" />
-  <Button Color="ButtonColor.Light" @onclick="CancleEditing">Cancel</Button>
+    <ArtifactDetailForm OnValidSubmitHandler="HandleValidSubmit" ButtonText="Save Changes" bindingArtifactObject="artifact" />
+    <Button Color="ButtonColor.Light" @onclick="CancleEditing">Cancel</Button>
 }
 
 @code {
     private Offcanvas offcanvas = default!;
-  [Parameter]
-  public int ArtifactId{ get; set; }
-  private bool isLoading = true;
-  private bool editingMode = false;
-  public mims.Models.Artifact artifact {get;set;}
-  private ConfirmDialog dialog = default!;
-  private string storagePath {get;set;}
-  private List<BreadcrumbItem>? navItems = new List<BreadcrumbItem>
+    [Parameter]
+    public int ArtifactId{ get; set; }
+    private bool isLoading = true;
+    private bool editingMode = false;
+    public mims.Models.Artifact artifact {get;set;}
+    private ConfirmDialog dialog = default!;
+    private string storagePath {get;set;}
+    private List<BreadcrumbItem>? navItems = new List<BreadcrumbItem>
   {
         new BreadcrumbItem{ Text = "Dashboard", Href ="/Admin" },
         new BreadcrumbItem{ Text = "Artifacts", Href ="/Admin/Artifacts" },
@@ -188,33 +193,33 @@ else if( editingMode == false)
   };
 
 
-      protected async override Task OnInitializedAsync()
+    protected async override Task OnInitializedAsync()
     {
-      artifact = await ArtifactService.GetArtifact(ArtifactId);
-      isLoading =  false;
-      try
-      {
         artifact = await ArtifactService.GetArtifact(ArtifactId);
-        storagePath = MediaService.baseStoragePath;
-      }
-      catch (Exception ex)
-      {
-        // Handle exceptions as needed
-        Console.WriteLine($"Error fetching artifact: {ex.Message}");
-      }
-      finally
-      {
-        isLoading = false;
-        StateHasChanged(); // Ensure the component re-renders
-      }
+        isLoading =  false;
+        try
+        {
+            artifact = await ArtifactService.GetArtifact(ArtifactId);
+            storagePath = MediaService.baseStoragePath;
+        }
+        catch (Exception ex)
+        {
+            // Handle exceptions as needed
+            Console.WriteLine($"Error fetching artifact: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged(); // Ensure the component re-renders
+        }
     }
     public async Task HandleValidSubmit()     {
-      offcanvas.ShowAsync();
+        offcanvas.ShowAsync();
 
-      var result = await ArtifactService.UpdateArtifact(artifact);
-      if(result.Succeeded)
+        var result = await ArtifactService.UpdateArtifact(artifact);
+        if(result.Succeeded)
         {
-          ToastService.Notify( new() {
+            ToastService.Notify( new() {
             IconName = IconName.Apple,
             Title = "Artifact Update Success !!",
             Message = "Specified Artifact has been Updated Successfully !!",
@@ -222,14 +227,14 @@ else if( editingMode == false)
           });
         }else
         {
-          string message = "";
-          foreach(IdentityError error in result.Errors)
-          {
-            message += $"{error.Description}";
-            Console.WriteLine(error.Description);
-          }
+            string message = "";
+            foreach(IdentityError error in result.Errors)
+            {
+                message += $"{error.Description}";
+                Console.WriteLine(error.Description);
+            }
 
-          ToastService.Notify( new() {
+            ToastService.Notify( new() {
             IconName = IconName.Apple,
             Title = "Artifact Update Failed !!",
             Message = message,
@@ -237,19 +242,28 @@ else if( editingMode == false)
           });
         }
 
-      CancleEditing();
-      offcanvas.HideAsync();
-      editingMode=false;
+        CancleEditing();
+        offcanvas.HideAsync();
+        editingMode=false;
     } 
 
+    private async Task OpenPrintDialog()
+    {
+        await JSRuntime.InvokeVoidAsync("window.print");
+    }
+
     private async Task EditArtifact() {
-      editingMode = true;
+        editingMode = true;
     }
 
     private async Task CancleEditing() {
-      Console.WriteLine("Cancling Editiing");
-      artifact= await ArtifactService.GetArtifact(ArtifactId);
-      editingMode = false;
+        Console.WriteLine("Cancling Editiing");
+        artifact= await ArtifactService.GetArtifact(ArtifactId);
+        editingMode = false;
+    }
+
+    private async Task NavigateToNextPage(){
+        navigationManager.NavigateTo($"Admin/Artifacts/{artifact.Id + 1}", true);
     }
 
     private async Task ShowDeleteConfirmationAsync()
